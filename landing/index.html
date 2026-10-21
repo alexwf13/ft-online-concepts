@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>FT online — тренировки в зал по методике Александра Елисеева в Telegram</title>
+  <meta name="description" content="Профессиональный инструмент для эффективных тренировок в зале. Бот в Telegram собирает тренировку под твой стаж, возраст, цель и травмы: видео техники и комментарий тренера к каждому упражнению. 10 дней бесплатно, без карты.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="FT online">
+  <meta property="og:title" content="FT online — знаешь, что делать в зале сегодня">
+  <meta property="og:description" content="Тренировки в Telegram по методике тренера Александра Елисеева. 10 дней бесплатно, без карты.">
+  <meta property="og:url" content="https://alexwf13.github.io/ft-online-concepts/landing/">
+  <meta property="og:image" content="https://alexwf13.github.io/ft-online-concepts/landing/assets/img/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Александр Елисеев в зале с гантелями">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#fbfbf8">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Commissioner:wght@400..700&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400..600&display=swap">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+
+<!-- Pen marks of the trainer. Each mark on the page is <svg class="pen"><use href="#…"/></svg>;
+     main.js copies the paths in, so every stroke can be drawn. -->
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="pen-tick" viewBox="0 0 80 64">
+    <path d="M8 35 C 13 38, 19 45, 25 55 C 26.5 57.5, 28.5 57.5, 30 55 C 39 37, 52 20, 73 7"/>
+  </symbol>
+  <symbol id="pen-circle" viewBox="0 0 100 100" preserveAspectRatio="none">
+    <path d="M63 9 C 38 2, 9 15, 7 45 C 5 75, 33 94, 61 90 C 87 86, 97 61, 92 37 C 87 14, 63 4, 38 11" vector-effect="non-scaling-stroke"/>
+  </symbol>
+  <symbol id="pen-under-a" viewBox="0 0 120 12" preserveAspectRatio="none">
+    <path d="M3 7 C 25 4, 55 3, 80 5 C 95 6, 108 8, 117 5" vector-effect="non-scaling-stroke"/>
+  </symbol>
+  <symbol id="pen-under-b" viewBox="0 0 120 12" preserveAspectRatio="none">
+    <path d="M3 5 C 30 8, 62 4, 90 6 C 102 7, 111 6, 117 4" vector-effect="non-scaling-stroke"/>
+  </symbol>
+  <symbol id="pen-brace" viewBox="0 0 300 30" preserveAspectRatio="none">
+    <path d="M4 3 C 5 12, 10 15, 30 15 L 136 15 C 144 15, 148 18, 150 27 C 152 18, 156 15, 164 15 L 270 15 C 290 15, 295 12, 296 3" vector-effect="non-scaling-stroke"/>
+  </symbol>
+  <symbol id="pen-arrow" viewBox="0 0 120 60">
+    <path d="M6 48 C 32 52, 70 42, 103 17"/>
+    <path d="M88 13 C 94 13.5, 100 14.5, 105 15.5 C 103.5 20.5, 101.5 25.5, 99 30"/>
+  </symbol>
+  <symbol id="pen-arrow-down" viewBox="0 0 40 100">
+    <path d="M12 4 C 6 34, 9 64, 22 92"/>
+    <path d="M10 81 C 14 85, 18 89, 22.5 93 C 24.5 87, 27 82, 30 77"/>
+  </symbol>
+  <symbol id="pen-up" viewBox="0 0 40 48">
+    <path d="M20 44 C 19 32, 20 18, 21 6"/>
+    <path d="M9 17 C 13 13, 17 9, 21 5 C 25 9, 29 13, 33 17"/>
+  </symbol>
+  <symbol id="pen-down" viewBox="0 0 40 48">
+    <path d="M20 4 C 21 16, 20 30, 19 42"/>
+    <path d="M7 31 C 11 35, 15 39, 19 43 C 23 39, 27 35, 31 31"/>
+  </symbol>
+</svg>
+
+<header class="site-header">
+  <div class="wrap site-header__row">
+    <a class="logo" href="#top"><b>FT</b> <i>online</i></a>
+    <a class="btn btn--sm" data-cta="header" href="#">10&nbsp;дней бесплатно</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- 1. First screen + M1 "the phone comes alive" -->
+  <section class="hero" id="hero">
+    <div class="wrap hero__grid">
+      <div class="hero__text">
+        <p class="hero__kicker">
+          <img src="assets/img/trainer/face.jpg" alt="Александр Елисеев" width="56" height="56">
+          <span>FT&nbsp;online&nbsp;— методика тренера Александра Елисеева</span>
+        </p>
+        <h1 class="hero__title">Открыл Telegram&nbsp;— и&nbsp;знаешь, что делать в&nbsp;зале сегодня</h1>
+        <p class="hero__lead">Бот собирает тренировку под твой стаж, возраст, цель и&nbsp;травмы. К&nbsp;каждому упражнению&nbsp;— видео техники, подходы, отдых и&nbsp;комментарий тренера.</p>
+        <div class="hero__action">
+          <a class="btn btn--lg" data-cta="hero" href="#">Попробовать 10&nbsp;дней бесплатно</a>
+          <p class="fine">Без карты. Откроется Telegram&nbsp;— первая тренировка через пару минут.</p>
+          <p class="fine">Потом&nbsp;— от <span data-price="quarterPerMonth">997&nbsp;₽</span> в&nbsp;месяц. Дешевле одной тренировки с&nbsp;тренером.</p>
+        </div>
+      </div>
+
+      <div class="hero__visual">
+        <p class="margin-note hero__note">Комментарий тренера<svg class="pen margin-note__arrow margin-note__arrow--side" aria-hidden="true"><use href="#pen-arrow"/></svg><svg class="pen margin-note__arrow margin-note__arrow--down" aria-hidden="true"><use href="#pen-arrow-down"/></svg></p>
+
+        <figure class="phone m1" aria-label="Пример тренировки в боте: комментарий тренера и карточка упражнения">
+          <div class="phone__screen">
+            <div class="tg-head">
+              <svg class="tg-head__back" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4 L7 12 L15 20"/></svg>
+              <p class="tg-head__title"><b>Fitness_trainer_online</b><span class="tg-head__status"><span class="st-idle">бот</span><span class="st-typing">печатает…</span></span></p>
+              <span class="tg-head__ava" aria-hidden="true">FT</span>
+            </div>
+            <div class="tg-chat">
+              <div class="tg-chat__feed">
+                <p class="tg-typing" aria-hidden="true"><i></i><i></i><i></i></p>
+                <p class="tg-msg tg-msg--text">Сегодня работаем грудь + трицепс. Главная задача&nbsp;— техника и&nbsp;контроль амплитуды. Вес рабочий, без рывков.</p>
+                <div class="tg-msg tg-msg--media">
+                  <div class="tg-video tg-video--short" role="img" aria-label="Видео техники, 30–60 секунд">
+                    <span class="tg-video__time">30–60 сек</span>
+                    <span class="tg-video__play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6.5 L18 12 L9 17.5 Z"/></svg></span>
+                  </div>
+                  <div class="tg-caption">
+                    <p class="tg-caption__title">Сведения в тренажёре «бабочка»</p>
+                    <p><b>15–20 повторений × 3 подхода</b></p>
+                    <p><b class="tg-label">Отдых:</b> 75–90 сек.</p>
+                  </div>
+                </div>
+                <div class="tg-keys">
+                  <span class="tg-key">👍</span><span class="tg-key">👎</span><span class="tg-key">Заменить</span>
+                  <span class="tg-key tg-key--wide tg-key--done">Сделано ✅</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <svg class="pen m1__tick" aria-hidden="true"><use href="#pen-tick"/></svg>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Sounds familiar? Four questions: each one leads to its answer further down -->
+  <section class="section pain" id="pain">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Ходишь в&nbsp;зал, стараешься&nbsp;— а&nbsp;тело почти не&nbsp;меняется?</h2>
+        <p class="lead">Скорее всего, на&nbsp;каждой тренировке в&nbsp;голове одни и&nbsp;те&nbsp;же вопросы:</p>
+      </div>
+
+      <ul class="asks">
+        <li class="ask">
+          <h3 class="ask__q"><a class="ask__link" href="#q-today" data-ask><span class="ask__text">Что делать сегодня?<svg class="pen pen--under" aria-hidden="true"><use href="#pen-under-a"/></svg></span></a></h3>
+          <p class="ask__text-more">Каждый раз что-то своё, и&nbsp;тренировки не&nbsp;складываются в&nbsp;программу.</p>
+          <svg class="ask__go" aria-hidden="true"><use href="#pen-arrow-down"/></svg>
+        </li>
+        <li class="ask">
+          <h3 class="ask__q"><a class="ask__link" href="#q-weight" data-ask><span class="ask__text">Какой вес брать?<svg class="pen pen--under" aria-hidden="true"><use href="#pen-under-b"/></svg></span></a></h3>
+          <p class="ask__text-more">Веса месяцами стоят на&nbsp;месте или растут рывками.</p>
+          <svg class="ask__go" aria-hidden="true"><use href="#pen-arrow-down"/></svg>
+        </li>
+        <li class="ask">
+          <h3 class="ask__q"><a class="ask__link" href="#q-right" data-ask><span class="ask__text">Правильно&nbsp;ли я&nbsp;делаю?<svg class="pen pen--under" aria-hidden="true"><use href="#pen-under-a"/></svg></span></a></h3>
+          <p class="ask__text-more">Со&nbsp;стороны вроде похоже, а&nbsp;куда уходит нагрузка&nbsp;— непонятно.</p>
+          <svg class="ask__go" aria-hidden="true"><use href="#pen-arrow-down"/></svg>
+        </li>
+        <li class="ask">
+          <h3 class="ask__q"><a class="ask__link" href="#q-harm" data-ask><span class="ask__text">Не&nbsp;наврежу&nbsp;ли себе?<svg class="pen pen--under" aria-hidden="true"><use href="#pen-under-b"/></svg></span></a></h3>
+          <p class="ask__text-more">После перерыва или со&nbsp;старой травмой страшно нагружаться.</p>
+          <svg class="ask__go" aria-hidden="true"><use href="#pen-arrow-down"/></svg>
+        </li>
+      </ul>
+
+      <p class="bridge">Дело не&nbsp;в&nbsp;лени. Просто рядом нет тренера, который ответит. FT&nbsp;online отвечает на&nbsp;эти вопросы в&nbsp;каждой тренировке.</p>
+    </div>
+  </section>
+
+  <!-- 3. The trainer leads you through the workout + M2 "layers" -->
+  <section class="section inside" id="inside" data-active="1">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="echo" id="q-right" tabindex="-1"><span class="echo__text">«Правильно&nbsp;ли я&nbsp;делаю?»<svg class="pen pen--under" aria-hidden="true"><use href="#pen-under-a"/></svg></span></p>
+        <h2>Тренер ведёт тебя по&nbsp;всей тренировке</h2>
+        <p class="lead">На&nbsp;каждое упражнение&nbsp;— три слоя, как у&nbsp;настоящего тренера. Открыл между подходами, глянул&nbsp;— сделал.</p>
+      </div>
+
+      <div class="inside__grid">
+        <div class="layer-tabs" role="group" aria-label="Слои упражнения">
+          <button type="button" class="layer-tab" data-layer="1" aria-pressed="true">Комментарий</button>
+          <button type="button" class="layer-tab" data-layer="2" aria-pressed="false">Видео</button>
+          <button type="button" class="layer-tab" data-layer="3" aria-pressed="false">Карточка</button>
+          <span class="layer-tabs__mark" aria-hidden="true"><svg class="pen is-drawn"><use href="#pen-under-a"/></svg></span>
+        </div>
+
+        <ol class="layers">
+          <li class="layer is-active" data-layer="1">
+            <h3 class="layer__head">
+              <button type="button" class="layer__btn" data-layer="1" aria-pressed="true">
+                <span class="layer__num">1<svg class="pen pen--circle" aria-hidden="true"><use href="#pen-circle"/></svg></span>
+                <span class="layer__name">Комментарий тренера</span>
+              </button>
+            </h3>
+            <p class="layer__text">Что важно именно сейчас: где работать мощно, где подконтрольно, на&nbsp;что обратить внимание. Комментарии продолжают друг друга, поэтому к&nbsp;одному и&nbsp;тому&nbsp;же упражнению в&nbsp;разных тренировках <span class="hl">они разные<svg class="pen pen--under" aria-hidden="true"><use href="#pen-under-a"/></svg></span>.</p>
+          </li>
+          <li class="layer" data-layer="2">
+            <h3 class="layer__head">
+              <button type="button" class="layer__btn" data-layer="2" aria-pressed="false">
+                <span class="layer__num">2<svg class="pen pen--circle" aria-hidden="true"><use href="#pen-circle"/></svg></span>
+                <span class="layer__name">Видео техники</span>
+              </button>
+            </h3>
+            <p class="layer__text"><span class="hl">30–60 секунд<svg class="pen pen--under" aria-hidden="true"><use href="#pen-under-b"/></svg></span>: Александр показывает, как сесть, куда вести локти и&nbsp;как держать корпус. Без лекций.</p>
+          </li>
+          <li class="layer" data-layer="3">
+            <h3 class="layer__head">
+              <button type="button" class="layer__btn" data-layer="3" aria-pressed="false">
+                <span class="layer__num">3<svg class="pen pen--circle" aria-hidden="true"><use href="#pen-circle"/></svg></span>
+                <span class="layer__name">Карточка упражнения</span>
+              </button>
+            </h3>
+            <p class="layer__text">Подходы, повторы, отдых, дыхание, фокус, техника, частые ошибки и&nbsp;совет тренера&nbsp;— <span class="hl">на&nbsp;одном экране<svg class="pen pen--under" aria-hidden="true"><use href="#pen-under-a"/></svg></span>.</p>
+          </li>
+        </ol>
+
+        <div class="inside__visual">
+          <figure class="phone layers-phone" aria-label="Пример упражнения в боте: комментарий тренера, видео техники и карточка">
+            <div class="phone__screen">
+              <div class="tg-head">
+                <svg class="tg-head__back" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4 L7 12 L15 20"/></svg>
+                <p class="tg-head__title"><b>Fitness_trainer_online</b><span class="tg-head__status">бот</span></p>
+                <span class="tg-head__ava" aria-hidden="true">FT</span>
+              </div>
+              <div class="tg-chat">
+                <div class="tg-chat__feed">
+                  <p class="tg-msg tg-msg--text" data-part="1">Сделай до&nbsp;упора, это твоё ключевое упражнение на&nbsp;грудь сегодня.</p>
+                  <div class="tg-msg tg-msg--media">
+                    <div class="tg-video" data-part="2" role="img" aria-label="Видео техники, 30–60 секунд">
+                      <span class="tg-video__time">30–60 сек</span>
+                      <span class="tg-video__play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6.5 L18 12 L9 17.5 Z"/></svg></span>
+                      <span class="tg-video__label">Видео техники</span>
+                    </div>
+                    <div class="tg-caption" data-part="3">
+                      <p class="tg-caption__title">Сведения в тренажёре «бабочка»</p>
+                      <p><b>15–20 повторений × 3 подхода</b></p>
+                      <p><b class="tg-label">Отдых:</b> 75–90 сек.</p>
+                      <p><b class="tg-label">Дыхание:</b> своди руки на выдохе, разводи на вдохе</p>
+                      <p><b class="tg-label">Концентрация:</b> грудь</p>
+                      <p><b class="tg-label">Тренер:</b> держи грудь раскрытой и веди движение мягко, без броска назад</p>
+                      <p><b class="tg-label">Техника:</b> руки чуть согнуты, локти приподняты, корпус стабилен</p>
+                      <p><b class="tg-label">Частые ошибки:</b> низкие локти, рывки корпусом, неправильная высота сиденья</p>
+                    </div>
+                  </div>
+                  <div class="tg-keys" data-part="3">
+                    <span class="tg-key">👍</span><span class="tg-key">👎</span><span class="tg-key">Заменить</span>
+                    <span class="tg-key tg-key--wide">Сделано ✅</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </figure>
+          <span class="layers-marker" aria-hidden="true"><span class="layers-marker__num">1</span><svg class="pen is-drawn"><use href="#pen-circle"/></svg></span>
+        </div>
+      </div>
+
+      <figure class="pull">
+        <blockquote><p>«Это мой голос в&nbsp;твоём кармане»</p></blockquote>
+        <figcaption><img src="assets/img/trainer/face.jpg" alt="" width="56" height="56" loading="lazy">—&nbsp;Александр Елисеев</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 4. Made for you: the training profile + M3 "situation → the trainer's answer" -->
+  <section class="section fit" id="profile">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="echo" id="q-today" tabindex="-1"><span class="echo__text">«Что делать сегодня?»<svg class="pen pen--under" aria-hidden="true"><use href="#pen-under-b"/></svg></span></p>
+        <h2>Тренировки под тебя, а&nbsp;не&nbsp;одна программа на&nbsp;всех</h2>
+        <p class="lead">Перед стартом бот задаст несколько вопросов&nbsp;— это около 2&nbsp;минут. От&nbsp;ответов зависит, какие упражнения ты&nbsp;получишь и&nbsp;с&nbsp;какой нагрузкой.</p>
+      </div>
+
+      <div class="fit__grid">
+        <figure class="form" aria-label="Пример тренировочного профиля">
+          <figcaption class="form__title">Тренировочный профиль</figcaption>
+          <dl class="form__rows">
+            <div class="form__row"><dt>Пол</dt><dd><span class="opt opt--on">М<svg class="pen pen--circle" aria-hidden="true" data-draw><use href="#pen-circle"/></svg></span> <span class="opt">Ж</span></dd></div>
+            <div class="form__row"><dt>Возраст</dt><dd><span class="opt">до&nbsp;18</span> <span class="opt opt--on">18–45<svg class="pen pen--circle" aria-hidden="true" data-draw><use href="#pen-circle"/></svg></span> <span class="opt">45+</span></dd></div>
+            <div class="form__row"><dt>Стаж</dt><dd><span class="opt opt--on">Новичок<svg class="pen pen--circle" aria-hidden="true" data-draw><use href="#pen-circle"/></svg></span> <span class="opt">Средний</span> <span class="opt">Опытный</span></dd></div>
+            <div class="form__row"><dt>Цель</dt><dd><span class="opt opt--on">Масса<svg class="pen pen--circle" aria-hidden="true" data-draw><use href="#pen-circle"/></svg></span> <span class="opt">Жиросжигание</span> <span class="opt">Тонус</span></dd></div>
+            <div class="form__row"><dt>Ограничения</dt><dd><span class="opt opt--on">Поясница<svg class="pen pen--circle" aria-hidden="true" data-draw><use href="#pen-circle"/></svg></span> <span class="opt">Плечи</span> <span class="opt">Колени</span></dd></div>
+          </dl>
+        </figure>
+
+        <div class="adapt" id="adapt">
+          <p class="echo" id="q-harm" tabindex="-1"><span class="echo__text">«Не&nbsp;наврежу&nbsp;ли себе?»<svg class="pen pen--under" aria-hidden="true"><use href="#pen-under-a"/></svg></span></p>
+          <p class="adapt__intro" id="adapt-intro">Вот как я&nbsp;подстраиваю тренировки:</p>
+          <div class="chips" role="group" aria-labelledby="adapt-intro">
+            <button type="button" class="chip" data-adapt="0" aria-pressed="true" aria-controls="adapt-answers">Болит поясница или колени</button>
+            <button type="button" class="chip" data-adapt="1" aria-pressed="false" aria-controls="adapt-answers">Тебе меньше 18</button>
+            <button type="button" class="chip" data-adapt="2" aria-pressed="false" aria-controls="adapt-answers">Давно не&nbsp;тренировался или форма пока слабая</button>
+            <button type="button" class="chip" data-adapt="3" aria-pressed="false" aria-controls="adapt-answers">Первый раз в&nbsp;зале</button>
+            <button type="button" class="chip" data-adapt="4" aria-pressed="false" aria-controls="adapt-answers">Застрял на&nbsp;одних весах</button>
+          </div>
+          <div class="adapt__reply">
+            <img class="adapt__ava" src="assets/img/trainer/face.jpg" alt="" width="56" height="56" loading="lazy">
+            <div class="adapt__answers" id="adapt-answers" aria-live="polite">
+              <p class="adapt__answer is-active" data-adapt="0">Уберу упражнения с&nbsp;высокой нагрузкой на&nbsp;эти зоны.</p>
+              <p class="adapt__answer" data-adapt="1">Учту зоны роста и&nbsp;не&nbsp;дам большой нагрузки на&nbsp;позвоночник.</p>
+              <p class="adapt__answer" data-adapt="2">Снижу общую нагрузку.</p>
+              <p class="adapt__answer" data-adapt="3">Оставлю только базовые, травмобезопасные упражнения.</p>
+              <p class="adapt__answer" data-adapt="4">Помогу выйти из&nbsp;застоя.</p>
+            </div>
+            <p class="adapt__sign">—&nbsp;Александр Елисеев</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="fit__after">
+        <p>Бот подстраивается и&nbsp;дальше: ставь лайк упражнениям, которые зашли, и&nbsp;дизлайк тем, что не&nbsp;нравятся. Тренажёр занят или его нет&nbsp;— жми «Заменить» и&nbsp;получишь равнозначное упражнение.</p>
+        <p class="safety">FT&nbsp;online&nbsp;— тренировочный помощник, а&nbsp;не&nbsp;врач. Если болит прямо сейчас, сначала покажись специалисту.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Result: the body we build and why it grows + M4 "reps slider" -->
+  <section class="section result" id="result">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Строим тело, которое нравится в&nbsp;зеркале и&nbsp;уверенно работает в&nbsp;зале</h2>
+        <p class="lead">Красивое, пропорциональное и&nbsp;сильное. У&nbsp;мужчин и&nbsp;женщин свои акценты.</p>
+      </div>
+
+      <div class="focus">
+        <article class="focus__item">
+          <svg class="sketch" viewBox="0 0 100 260" role="img" aria-label="Эскиз мужского силуэта: широкие плечи и V-образный торс">
+            <g class="sketch__ink">
+              <path d="M50 4.5 C 44 4.5, 40.5 9, 40.5 16 C 40.5 21, 42 25, 44.5 27.5 C 46.5 29.5, 48 30, 50 30 C 52 30, 53.5 29.5, 55.5 27.5 C 58 25, 59.5 21, 59.5 16 C 59.5 9, 56 4.5, 50 4.5 Z"/>
+              <path d="M44.5 28 C 45 32, 44.5 36, 43 39 C 37 42, 30 43, 25 45 C 19 47, 15 53, 15 61 C 15 68, 14 76, 15 84 C 15.5 90, 16 93, 16 96 C 15 104, 15 112, 17 122 C 18 128, 18.5 131, 19 134 C 19.5 140, 20 146, 22 150 C 24 152, 26 150, 26 146 C 26 140, 26.5 137, 26.5 134 C 27 124, 27.5 112, 26.5 102 C 26.5 99, 27 97, 27 96 C 27 90, 28 84, 28.5 80 C 29 75, 29.5 70, 30.5 66"/>
+              <path d="M55.5 28 C 55 32, 55.5 36, 57 39 C 63 42, 70 43, 75 45 C 81 47, 85 53, 85 61 C 85 68, 86 76, 85 84 C 84.5 90, 84 93, 84 96 C 85 104, 85 112, 83 122 C 82 128, 81.5 131, 81 134 C 80.5 140, 80 146, 78 150 C 76 152, 74 150, 74 146 C 74 140, 73.5 137, 73.5 134 C 73 124, 72.5 112, 73.5 102 C 73.5 99, 73 97, 73 96 C 73 90, 72 84, 71.5 80 C 71 75, 70.5 70, 69.5 66"/>
+              <path d="M30.5 66 C 33 80, 37 94, 39.5 108 C 39 114, 38 119, 37 124 C 34.5 136, 34 150, 35.5 162 C 37 172, 38.5 178, 39.5 184 C 37 192, 36 202, 38 214 C 39.5 224, 41 232, 41.5 240 C 41 245, 39 249, 38 252 C 40 254, 44 254, 46 251 C 46 247, 45.5 244, 45.5 240"/>
+              <path d="M69.5 66 C 67 80, 63 94, 60.5 108 C 61 114, 62 119, 63 124 C 65.5 136, 66 150, 64.5 162 C 63 172, 61.5 178, 60.5 184 C 63 192, 64 202, 62 214 C 60.5 224, 59 232, 58.5 240 C 59 245, 61 249, 62 252 C 60 254, 56 254, 54 251 C 54 247, 54.5 244, 54.5 240"/>
+              <path d="M45.5 240 C 46 228, 46.5 214, 46 200 C 45.5 194, 46 188, 46.5 182 C 47 166, 48.5 148, 50 136 C 51.5 148, 53 166, 53.5 182 C 54 188, 54.5 194, 54 200 C 53.5 214, 54 228, 54.5 240"/>
+              <path class="sketch__soft" d="M33 66 C 37 76, 44 79, 49 75 M51 75 C 56 79, 63 76, 67 66 M38 46 C 42 47.5, 46 46.5, 49 44.5 M51 44.5 C 54 46.5, 58 47.5, 62 46 M50 84 L 50 104"/>
+            </g>
+            <svg class="pen" x="0" y="0" width="100" height="260" viewBox="0 0 100 260" data-draw><path d="M13 49 C 9 55, 9 65, 12 72"/><path d="M87 49 C 91 55, 91 65, 88 72"/><path d="M30.5 66 C 33 80, 37 94, 39.5 108"/><path d="M69.5 66 C 67 80, 63 94, 60.5 108"/></svg>
+          </svg>
+          <h3>Мужской фокус</h3>
+          <p>Строим V-образный атлетичный силуэт: мощные дельты и&nbsp;руки, развитые грудные и&nbsp;широчайшие. Формируем строгую осанку. Ноги и&nbsp;ягодицы&nbsp;— обязательная часть программы.</p>
+          <p class="focus__result"><b>Результат:</b> пропорциональное, сильное, красивое и&nbsp;мужественное тело.</p>
+        </article>
+        <article class="focus__item">
+          <svg class="sketch" viewBox="0 0 100 260" role="img" aria-label="Эскиз женского силуэта: узкая талия и выраженная линия бёдер">
+            <g class="sketch__ink">
+              <ellipse cx="50" cy="19" rx="7.5" ry="10.5"/>
+              <path d="M50 4.5 C 40 4.5, 37 12, 37.5 22 C 38 32, 37.5 40, 34 48 M50 4.5 C 60 4.5, 63 12, 62.5 22 C 62 31, 62.5 38, 66 45"/>
+              <path d="M46.5 29 C 47 33, 46.5 36.5, 45 39 C 41 41.5, 37 43, 34 45.5 C 30 47, 27.5 51, 27 56 C 26 64, 22 72, 17 80 C 16 81.5, 16.5 83, 18 84 C 24 88, 31 92, 37.5 95.5 C 39.5 96.5, 41.5 98, 42.5 100 C 43 101.5, 41.5 102.5, 40 101.5 C 38.5 100.5, 37 100, 36 99.7"/>
+              <path d="M53.5 29 C 53 33, 53.5 36, 55 39 C 59 40.5, 63 41.5, 66 43 C 70 44.5, 72.5 48, 73 53 C 74 61, 78 70, 83 77 C 84 78.5, 83.5 80, 82 81 C 76 85, 69 89, 62.5 93 C 60.5 94, 58.5 95.5, 57.5 97.5 C 57 99, 58.5 100, 60 99 C 61.5 98, 63 97.5, 64 97.2"/>
+              <path d="M33.5 60 C 30.5 66, 27 73, 23 79 C 28 83, 33 87, 38.5 90.5"/>
+              <path d="M66.5 56 C 69.5 62, 73 69, 77 76 C 72 80, 67 84, 61.5 88"/>
+              <path d="M33.5 60 C 32 65, 32 71, 34.5 76 C 36.5 81.5, 39 86, 40 90.5"/>
+              <path d="M66.5 56 C 68 61, 68 67, 65.5 72 C 63.5 78, 61 83, 60 88.5"/>
+              <path d="M39.5 102 C 34 106, 29.5 110, 28.5 117 C 28 124, 29 131, 31 138 C 33 152, 35.5 166, 37.5 180 C 37 188, 37.5 198, 39.5 210 C 41.5 222, 43 231, 44 238 C 43.5 244, 42 249, 41 253 C 42 255, 44.5 255, 46 252 C 46.5 248, 47 244, 47.5 239"/>
+              <path d="M47.5 239 C 47.2 232, 47 222, 46.5 206 C 46 198, 45.5 188, 46 178 C 47 164, 49 148, 50.5 134 C 52.5 148, 54.5 164, 55 177 C 55.5 188, 55 198, 54.5 207 C 54.2 222, 54.3 231, 54.5 239"/>
+              <path d="M60.5 100 C 65 105, 68.5 111, 69.5 119 C 70 126, 69.5 133, 68 140 C 66.5 152, 64 166, 61.5 181 C 62.5 190, 62.5 200, 61 211 C 59.5 222, 58.5 231, 58 238 C 58.5 244, 60 249, 61 253 C 60 255, 57.5 255, 56 252 C 55.5 248, 55 244, 54.5 239"/>
+              <path class="sketch__soft" d="M37.5 70 C 39 77.5, 45 80, 49 76 M51 75.5 C 55 79.5, 61 77, 62.5 69.5"/>
+            </g>
+            <svg class="pen" x="0" y="0" width="100" height="260" viewBox="0 0 100 260" data-draw><path d="M38 104.5 C 33 108.5, 28 112.5, 26.5 119 C 26 126, 27 133, 29 139.5"/><path d="M62 102.5 C 67 107, 71 112.5, 71.8 120 C 72.2 127, 71.5 134, 70 140.5"/></svg>
+          </svg>
+          <h3>Женский фокус</h3>
+          <p>Акцент на&nbsp;развитые ягодицы, красивую линию бёдер и&nbsp;королевскую осанку. Рельефные женственные руки, узкая талия, упругая приподнятая грудь. Прорабатываем проблемные женские зоны.</p>
+          <p class="focus__result"><b>Результат:</b> подчёркнутая природная красота и&nbsp;женственность.</p>
+        </article>
+      </div>
+
+      <h3 class="sub-title">За&nbsp;счёт чего растёт результат</h3>
+      <div class="why">
+        <article class="why__row">
+          <h4 class="why__title">Классика, доказавшая свою эффективность</h4>
+          <div class="why__body">
+            <p>Основа&nbsp;— классические стили силового тренинга старой и&nbsp;новой школы. Бот сочетает их&nbsp;в&nbsp;правильных пропорциях и&nbsp;меняет упражнения, чтобы ты&nbsp;не&nbsp;застревал на&nbsp;месте.</p>
+          </div>
+        </article>
+
+        <article class="why__row why__row--reps" id="reps">
+          <div class="why__head">
+            <p class="echo" id="q-weight" tabindex="-1"><span class="echo__text">«Какой вес брать?»<svg class="pen pen--under" aria-hidden="true"><use href="#pen-under-a"/></svg></span></p>
+            <h4 class="why__title">Вес растёт по&nbsp;правилу</h4>
+          </div>
+          <div class="why__body">
+            <p>У&nbsp;каждого упражнения своя вилка повторений, например 8–12. Сделал больше 12&nbsp;чисто&nbsp;— бот подскажет добавить вес, меньше 8&nbsp;— снизить. Как подбирать рабочий вес, Александр объясняет в&nbsp;гиде по&nbsp;приложению.</p>
+
+            <div class="reps-widget" data-zone="ok" style="--i: 4">
+              <label class="reps-widget__q" for="reps-input">Сколько повторов сделал чисто?</label>
+              <div class="scale">
+                <input class="scale__input" id="reps-input" type="range" min="6" max="14" step="1" value="10" aria-valuetext="10 повторов">
+                <ol class="scale__nums" aria-hidden="true">
+                  <li>6</li><li>7</li><li class="is-in">8</li><li class="is-in">9</li><li class="is-in">10</li><li class="is-in">11</li><li class="is-in">12</li><li>13</li><li>14</li>
+                </ol>
+                <span class="scale__line" aria-hidden="true"></span>
+                <span class="scale__thumb" aria-hidden="true">
+                  <svg class="pen is-drawn scale__circle"><use href="#pen-circle"/></svg>
+                  <span class="scale__knob"></span>
+                </span>
+                <svg class="pen scale__brace" aria-hidden="true" data-draw><use href="#pen-brace"/></svg>
+                <span class="scale__range" aria-hidden="true">вилка 8–12</span>
+              </div>
+              <p class="verdict" aria-live="polite">
+                <span class="verdict__mark" aria-hidden="true">
+                  <svg class="pen verdict__icon" data-zone="ok" data-draw><use href="#pen-tick"/></svg>
+                  <svg class="pen verdict__icon" data-zone="high"><use href="#pen-up"/></svg>
+                  <svg class="pen verdict__icon" data-zone="low"><use href="#pen-down"/></svg>
+                </span>
+                <span class="verdict__text">В&nbsp;вилке 8–12&nbsp;— вес подходит. Работай с&nbsp;ним.</span>
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <article class="why__row">
+          <h4 class="why__title">Питание под цель</h4>
+          <div class="why__body">
+            <p>В&nbsp;боте есть короткий гид: как есть на&nbsp;наборе и&nbsp;на&nbsp;жиросжигании, с&nbsp;примерами меню. Без голодовок и&nbsp;ощущения, что жизнь состоит из&nbsp;курицы и&nbsp;огурцов.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. The trainer -->
+  <section class="section coach" id="trainer">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>За&nbsp;FT&nbsp;online стоит живой тренер&nbsp;— Александр Елисеев</h2>
+        <p class="lead">Ученики зовут его просто&nbsp;— Саня. В&nbsp;бот он&nbsp;собрал ту&nbsp;же логику, что на&nbsp;своих персональных тренировках: классика, чистая техника, пропорции и&nbsp;здравый смысл.</p>
+      </div>
+
+      <div class="coach__grid">
+        <figure class="coach__photo">
+          <img src="assets/img/trainer/gym-1200.jpg" srcset="assets/img/trainer/gym-1200.jpg 1200w, assets/img/trainer/gym-2400.jpg 2400w" sizes="(min-width: 960px) 680px, 100vw" alt="Александр Елисеев в зале с гантелями" width="1200" height="800" loading="lazy">
+        </figure>
+        <div class="coach__side">
+          <ul class="facts">
+            <li><b>18&nbsp;лет в&nbsp;профессии</b>&nbsp;— разные цели, разные тела, разные уровни подготовки.</li>
+            <li><b>Профильное образование</b>&nbsp;— факультет физической культуры, государственный педагогический университет.</li>
+            <li><b>Разные задачи</b>&nbsp;— новички и&nbsp;опытные, подростки и&nbsp;возрастные клиенты, люди после перерыва и&nbsp;с&nbsp;травмами, профессиональные спортсмены.</li>
+          </ul>
+          <button type="button" class="hello" data-video-soon>
+            <span class="hello__time">30–45 сек</span>
+            <span class="hello__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 6.5 L18 12 L9 17.5 Z"/></svg></span>
+            <span class="hello__label">Видео-приветствие</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="contact">
+        <p class="contact__text">Мы не&nbsp;обещаем магию за&nbsp;неделю. Мы&nbsp;гарантируем порядок: каждая тренировка собрана по&nbsp;методике под твой профиль, без хаоса и&nbsp;случайных упражнений. А&nbsp;если ты&nbsp;всё делаешь по&nbsp;плану, а&nbsp;результат встал,&nbsp;— разбор с&nbsp;тренером входит в&nbsp;подписку.</p>
+        <div class="contact__side">
+          <div class="tg-card">
+            <div class="tg-card__head">
+              <img src="assets/img/trainer/face.jpg" alt="" width="44" height="44" loading="lazy">
+              <p><b>Саня на&nbsp;связи</b><span>тренер, отвечает лично</span></p>
+            </div>
+            <p class="tg-card__msg">Результат не&nbsp;двигается? Напиши&nbsp;— разберём, что поменять: в&nbsp;тренировках, технике или питании.</p>
+          </div>
+          <a class="text-link" data-contact href="#">Написать Сане в&nbsp;Telegram&nbsp;→</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Reviews: placeholders until real ones arrive. To hide the block, add the hidden attribute to this section. -->
+  <section class="section reviews" id="reviews">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Что говорят те, кто уже тренируется</h2>
+      </div>
+      <div class="reviews__grid">
+        <article class="stub" aria-label="Место для отзыва новичка">
+          <div class="stub__head"><span class="stub__ava"></span><p><b>Имя, возраст</b><span>новичок</span></p></div>
+          <span class="stub__line"></span><span class="stub__line"></span><span class="stub__line"></span><span class="stub__line stub__line--short"></span>
+        </article>
+        <article class="stub" aria-label="Место для отзыва человека с опытом">
+          <div class="stub__head"><span class="stub__ava"></span><p><b>Имя, возраст</b><span>с&nbsp;опытом</span></p></div>
+          <span class="stub__line"></span><span class="stub__line"></span><span class="stub__line"></span><span class="stub__line stub__line--short"></span>
+        </article>
+        <article class="stub" aria-label="Место для отзыва женщины">
+          <div class="stub__head"><span class="stub__ava"></span><p><b>Имя, возраст</b><span>женщина</span></p></div>
+          <span class="stub__line"></span><span class="stub__line"></span><span class="stub__line"></span><span class="stub__line stub__line--short"></span>
+        </article>
+      </div>
+      <div class="reviews__shots">
+        <div class="stub stub--shot" role="img" aria-label="Место для скрина переписки"><span>Скрин переписки</span></div>
+        <div class="stub stub--shot" role="img" aria-label="Место для скрина переписки"><span>Скрин переписки</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Price -->
+  <section class="section price" id="price">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Начни с&nbsp;10&nbsp;дней бесплатно</h2>
+        <p class="lead">Без карты и&nbsp;автосписаний. За&nbsp;10&nbsp;дней сравнишь свои обычные тренировки с&nbsp;тренировками по&nbsp;методике&nbsp;— и&nbsp;решишь, продолжать&nbsp;ли.</p>
+      </div>
+
+      <ol class="steps">
+        <li><span class="steps__num" aria-hidden="true">1</span><p>Нажми кнопку&nbsp;— откроется бот в&nbsp;Telegram.</p></li>
+        <li><span class="steps__num" aria-hidden="true">2</span><p>Ответь на&nbsp;вопросы профиля&nbsp;— около 2&nbsp;минут.</p></li>
+        <li><span class="steps__num" aria-hidden="true">3</span><p>Получи первую тренировку и&nbsp;иди в&nbsp;зал.</p></li>
+      </ol>
+
+      <ul class="plans">
+        <li class="plan">
+          <div class="plan__head"><h3 class="plan__name">Демо</h3></div>
+          <p class="plan__price">0&nbsp;₽</p>
+          <div class="plan__text"><p>10&nbsp;дней полного доступа, без карты.</p></div>
+        </li>
+        <li class="plan">
+          <div class="plan__head"><h3 class="plan__name">1&nbsp;месяц</h3></div>
+          <p class="plan__price" data-price="monthly">1&nbsp;290&nbsp;₽</p>
+          <div class="plan__text"><p>Полный доступ.</p></div>
+        </li>
+        <li class="plan plan--rec">
+          <div class="plan__head"><h3 class="plan__name">3&nbsp;месяца</h3><p class="plan__note">Рекомендуем</p></div>
+          <p class="plan__price"><span class="plan__mark"><span data-price="quarter">2&nbsp;990&nbsp;₽</span><svg class="pen pen--circle" aria-hidden="true" data-draw><use href="#pen-circle"/></svg></span></p>
+          <div class="plan__text">
+            <p>вместо <span data-price="quarterFull">3&nbsp;870&nbsp;₽</span> при помесячной оплате. Выходит <span data-price="quarterPerMonth">997&nbsp;₽</span> в&nbsp;месяц.</p>
+            <p>За&nbsp;три месяца результат становится заметен.</p>
+          </div>
+        </li>
+      </ul>
+
+      <div class="price__foot">
+        <div class="price__notes">
+          <p>Во&nbsp;всех тарифах&nbsp;— полный доступ: тренировки, гид по&nbsp;питанию и&nbsp;разбор с&nbsp;тренером. Тариф выбираешь прямо в&nbsp;боте.</p>
+          <p>Одна тренировка с&nbsp;персональным тренером стоит <span data-price="trainerSession">1&nbsp;500–3&nbsp;000&nbsp;₽</span>. Месяц FT&nbsp;online&nbsp;— дешевле одного такого занятия.</p>
+        </div>
+        <div class="price__action">
+          <a class="btn btn--lg" data-cta="price" href="#">Попробовать 10&nbsp;дней бесплатно</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Questions -->
+  <section class="section faq" id="faq">
+    <div class="wrap faq__grid">
+      <h2>Частые вопросы</h2>
+      <div class="faq__list">
+        <details><summary>Где это работает?</summary><p>В&nbsp;Telegram, который у&nbsp;тебя уже есть. Отдельное приложение ставить не&nbsp;нужно.</p></details>
+        <details><summary>А&nbsp;если в&nbsp;зале плохо ловит интернет?</summary><p>Загрузи тренировку заранее, дома или там, где есть сеть. В&nbsp;зале всё будет под рукой и&nbsp;без связи: план, карточки, видео и&nbsp;комментарии тренера.</p></details>
+        <details><summary>Нужен&nbsp;ли тренажёрный зал?</summary><p>Да, бот рассчитан на&nbsp;зал. Если какого-то тренажёра нет или он&nbsp;занят, бот предложит равнозначную замену.</p></details>
+        <details><summary>Я&nbsp;новичок или у&nbsp;меня плохая техника&nbsp;— подойдёт?</summary><p>Да. Бот учтёт стаж и&nbsp;начнёт с&nbsp;базовых упражнений. Видео и&nbsp;комментарии тренера помогут поставить технику шаг за&nbsp;шагом.</p></details>
+        <details><summary>У&nbsp;меня травма или что-то болит. Как быть?</summary><p>Отметь ограничения в&nbsp;профиле, и&nbsp;бот уберёт упражнения с&nbsp;нагрузкой на&nbsp;эти зоны. При боли, диагнозах и&nbsp;восстановлении после травмы сначала согласуй нагрузку с&nbsp;врачом.</p></details>
+        <details><summary>Упражнение вызывает дискомфорт&nbsp;— что делать?</summary><p>Нажми «Заменить»: бот подберёт равнозначное упражнение под твой профиль.</p></details>
+        <details><summary>Сколько длится тренировка?</summary><p>Обычно 45–75 минут. Зависит от&nbsp;программы, темпа и&nbsp;очередей на&nbsp;тренажёры.</p></details>
+        <details><summary>Мне сложно держать режим.</summary><p>Начни с&nbsp;одной тренировки, потом со&nbsp;следующей. План уже готов&nbsp;— остаётся прийти и&nbsp;сделать.</p></details>
+        <details><summary>Что будет после 10&nbsp;дней?</summary><p>Если захочешь продолжить, выберешь тариф прямо в&nbsp;Telegram. Карту в&nbsp;демо ты&nbsp;не&nbsp;привязывал, поэтому ничего не&nbsp;спишется само.</p></details>
+        <details><summary>Как оплатить?</summary><p>Прямо в&nbsp;Telegram. Доступ откроется сразу.</p></details>
+        <details><summary>Можно написать тренеру?</summary><p>Да. Если тренируешься по&nbsp;плану, а&nbsp;результат не&nbsp;двигается, напиши Сане: он&nbsp;разберёт причину и&nbsp;подскажет, что поменять. Персональное ведение 24/7 в&nbsp;подписку не&nbsp;входит.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Final screen -->
+  <section class="section final" id="final">
+    <div class="wrap final__inner">
+      <h2>Первая тренировка уже ждёт тебя в&nbsp;Telegram</h2>
+      <p class="lead">Ответь на&nbsp;пару вопросов&nbsp;— и&nbsp;бот соберёт тренировку под твой уровень, цель и&nbsp;ограничения. Начни с&nbsp;10&nbsp;бесплатных дней и&nbsp;почувствуй разницу между «просто сходил в&nbsp;зал» и&nbsp;тренировкой по&nbsp;системе.</p>
+      <div class="final__action">
+        <a class="btn btn--lg" data-cta="final" href="#">Попробовать 10&nbsp;дней бесплатно</a>
+        <p class="fine">Без карты. Первая тренировка&nbsp;— через пару минут.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap site-footer__row">
+    <p>© 2026 FT&nbsp;online · Методика тренировок Александра Елисеева</p>
+    <nav aria-label="Ссылки в подвале">
+      <a data-cta="footer" href="#">Бот в&nbsp;Telegram</a>
+      <a data-contact href="#">Написать тренеру</a>
+      <a data-soon href="#">Документы</a>
+    </nav>
+  </div>
+</footer>
+
+<div class="sticky-cta" inert>
+  <a class="btn btn--lg btn--block" data-cta="sticky" href="#">Попробовать 10&nbsp;дней бесплатно</a>
+</div>
+
+<div class="toast" role="status" aria-live="polite"></div>
+
+<script src="assets/js/main.js" defer></script>
+</body>
+</html>
