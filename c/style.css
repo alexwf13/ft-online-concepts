@@ -1,0 +1,1074 @@
+/* FT online — concept C «Переписка»: the page is a conversation with the trainer. */
+
+:root {
+  /* Page: the conversation */
+  --wall: #d5e5e0;          /* chat wallpaper, sea glass */
+  --bubble: #ffffff;        /* trainer's messages */
+  --ink: #10201d;
+  --ink-2: #3f5651;         /* secondary text, AA on white and on the wallpaper */
+  --teal: #0e4d47;          /* your side: replies, sent messages, names */
+  --teal-soft: #8fd8c7;     /* read ticks on teal */
+  --orange: #ff6a2c;        /* the gym wall: the main button, the avatar */
+  --orange-hover: #ff7f4a;
+
+  /* Phone: the bot in Telegram, night theme in our tint */
+  --tg-frame: #0a1110;
+  --tg-bg: #0f1f1d;
+  --tg-bubble: #1d302d;
+  --tg-text: #e8f1ef;
+  --tg-muted: #8fa9a3;
+  --tg-key: rgba(255, 255, 255, .12);
+  --tg-accent: #2a8c7e;
+  --done: #2fbf68;
+
+  --font: "Geologica", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-ui: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --r-bubble: 22px;
+  --r-tail: 6px;
+  --gutter: 16px;
+  --header-h: 60px;
+  --ease: cubic-bezier(.2, .8, .2, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--wall) url("img/wall.svg") 0 0 / 320px 320px;
+  color: var(--ink);
+  font: 400 16px/1.5 var(--font);
+  font-variation-settings: "SHRP" 0, "CRSV" 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, svg { display: block; max-width: 100%; }
+p, h1, h2, h3, figure, blockquote { margin: 0; }
+button { font: inherit; color: inherit; }
+a { color: var(--teal); }
+
+[id], .ask { scroll-margin-top: calc(var(--header-h) + 16px); }
+
+:focus-visible {
+  outline: 3px solid var(--teal);
+  outline-offset: 3px;
+}
+
+.nw { white-space: nowrap; }
+
+.wrap {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* === Header: the chat's title bar === */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(213, 229, 224, .86);
+  -webkit-backdrop-filter: saturate(1.3) blur(14px);
+  backdrop-filter: saturate(1.3) blur(14px);
+  border-bottom: 1px solid rgba(14, 77, 71, .1);
+}
+
+.topbar__row {
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+/* The logo is a message bubble that says FT, followed by "online" */
+.brand__mark {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 32px;
+  padding: 0 9px;
+  border-radius: 12px 12px 12px 4px;
+  background: var(--teal);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -.01em;
+  font-variation-settings: "SHRP" 60;
+}
+
+.brand__name {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -.02em;
+}
+
+/* === Buttons === */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 16px;
+  background: var(--orange);
+  color: var(--ink);
+  font: 700 16px/1.15 var(--font);
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color .15s, transform .15s;
+}
+
+@media (hover: hover) {
+  .btn:hover { background: var(--orange-hover); }
+}
+.btn:active { transform: scale(.98); }
+
+.btn--sm {
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 999px;
+  font-size: 14px;
+}
+
+.btn--lg {
+  width: 100%;
+  min-height: 58px;
+  padding: 0 12px;
+  font-size: clamp(15px, 4.7vw, 17px);
+}
+
+/* === Conversation building blocks === */
+.turn { padding: 28px 0 64px; }
+
+.turn__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: 28px;
+}
+
+.thread, .after, .group {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.thread, .after { gap: 10px; }
+.group { gap: 4px; align-items: flex-start; }
+
+/* Who is talking: avatar and name above a group of messages */
+.byline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 6px 2px;
+  color: var(--teal);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.ava {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--orange);
+  object-fit: cover;
+}
+
+.msg {
+  position: relative;
+  max-width: 100%;
+  padding: 12px 16px 13px;
+  border-radius: var(--r-bubble);
+  background: var(--bubble);
+  box-shadow: 0 1px 1px rgba(14, 77, 71, .1);
+  overflow-wrap: break-word;
+}
+
+.msg p { text-wrap: pretty; }
+
+/* The last message in a group gets a tail */
+.msg--tail { border-bottom-left-radius: var(--r-tail); }
+
+.msg--tail::before {
+  content: "";
+  position: absolute;
+  left: -7px;
+  bottom: 0;
+  width: 14px;
+  height: 16px;
+  background: inherit;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 16'%3E%3Cpath d='M14 0v16H0c5-2 9-6 9-16z'/%3E%3C/svg%3E") no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 16'%3E%3Cpath d='M14 0v16H0c5-2 9-6 9-16z'/%3E%3C/svg%3E") no-repeat;
+}
+
+/* Your messages: right side, teal, read ticks */
+.msg--out {
+  align-self: flex-end;
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  max-width: 88%;
+  background: var(--teal);
+  color: #fff;
+  font-weight: 500;
+  border-bottom-right-radius: var(--r-tail);
+}
+
+.msg--out::before {
+  content: "";
+  position: absolute;
+  right: -7px;
+  bottom: 0;
+  width: 14px;
+  height: 16px;
+  background: inherit;
+  transform: scaleX(-1);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 16'%3E%3Cpath d='M14 0v16H0c5-2 9-6 9-16z'/%3E%3C/svg%3E") no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 16'%3E%3Cpath d='M14 0v16H0c5-2 9-6 9-16z'/%3E%3C/svg%3E") no-repeat;
+}
+
+.ticks {
+  flex: none;
+  margin-bottom: 4px;
+  fill: none;
+  stroke: var(--teal-soft);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ticks__2 { transition: opacity .2s; }
+.is-sending .ticks__2 { opacity: 0; }
+
+/* Big messages: the headlines */
+.display {
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -.028em;
+  font-variation-settings: "SHRP" 50;
+}
+
+.display--2 {
+  font-size: clamp(26px, 7vw, 44px);
+  line-height: 1.05;
+  letter-spacing: -.024em;
+}
+
+.display:focus { outline: none; }
+
+/* The headline is sized by its bubble, so "Открыл Telegram —" always fits the first line */
+.msg--hero {
+  container-type: inline-size;
+  width: 100%;
+  padding: 16px 18px 20px;
+}
+
+.msg--hero .display {
+  font-size: clamp(25px, 8.2vw, 40px);  /* browsers without container units */
+  font-size: clamp(25px, 9.8cqi, 40px);
+}
+
+/* The trainer's own words: Geologica's cursive forms */
+.msg--voice, .msg--quote { font-variation-settings: "CRSV" 1; }
+
+.msg--quote { padding: 16px 20px 18px; }
+
+.msg--quote p {
+  font-size: clamp(25px, 6.6vw, 40px);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -.02em;
+  text-wrap: balance;
+}
+
+/* The button attached under a message, like an inline keyboard */
+.kb {
+  width: 100%;
+  margin-top: 4px;
+}
+
+.notes {
+  display: grid;
+  gap: 4px;
+  margin-top: 4px;
+  padding: 0 4px;
+  color: var(--ink-2);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+/* Service line in the middle of the chat */
+.service {
+  align-self: center;
+  max-width: 34em;
+  margin-top: 10px;
+  padding: 7px 14px;
+  border-radius: 14px;
+  background: rgba(14, 77, 71, .1);
+  color: #23403b;
+  font-size: 13.5px;
+  line-height: 1.45;
+  text-align: center;
+}
+
+/* === Reply chips: what you can say. Outlined = not sent yet, filled = sent === */
+.replies {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.chip {
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1.5px solid var(--teal);
+  border-radius: 22px 22px var(--r-tail) 22px;
+  background: rgba(255, 255, 255, .6);
+  color: var(--teal);
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 1.25;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color .2s, color .2s, transform .15s;
+}
+
+@media (hover: hover) {
+  .chip:hover { background: #fff; }
+}
+.chip:active { transform: scale(.97); }
+
+/* Already asked: still works as a shortcut, just quieter */
+.chip.is-sent {
+  border-color: rgba(14, 77, 71, .35);
+  background: rgba(14, 77, 71, .08);
+}
+
+/* Visitor's message that appears after a reply chip */
+.ask {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.ask[hidden] { display: none; }
+
+/* === Phone mockup: the bot itself === */
+.stage { min-width: 0; }
+
+.phone {
+  position: relative;
+  width: min(300px, 100%);
+  aspect-ratio: 300 / 620;
+  margin: 0 auto;
+  padding: 9px;
+  border-radius: 46px;
+  background: var(--tg-frame);
+  box-shadow:
+    inset 0 0 0 1.5px #2a3634,
+    0 34px 60px -28px rgba(14, 77, 71, .55),
+    0 14px 24px -14px rgba(0, 0, 0, .35);
+}
+
+.phone::before {
+  content: "";
+  position: absolute;
+  top: 19px;
+  left: 50%;
+  z-index: 3;
+  width: 78px;
+  height: 22px;
+  margin-left: -39px;
+  border-radius: 12px;
+  background: #000;
+}
+
+.phone__screen {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 37px;
+  background: var(--tg-bg);
+  color: var(--tg-text);
+  font: 400 13px/1.36 var(--font-ui);
+  letter-spacing: -.005em;
+}
+
+.tg-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 40px;
+  padding: 4px 24px 0 30px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.tg-status__icons { display: flex; align-items: center; gap: 5px; }
+
+.tg-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 10px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, .06);
+}
+
+.tg-back, .tg-ava {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.tg-back { background: rgba(255, 255, 255, .08); }
+
+.tg-ava {
+  background: var(--orange);
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.tg-title {
+  flex: 1;
+  min-width: 0;
+  padding: 3px 8px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, .08);
+  text-align: center;
+  line-height: 1.2;
+}
+
+.tg-title b {
+  display: block;
+  overflow: hidden;
+  font-size: 12.5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tg-sub { color: var(--tg-muted); font-size: 11px; }
+.tg-sub.is-typing { color: var(--teal-soft); }
+
+.tg-chat {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  background: url("img/wall-dark.svg") 0 0 / 240px 240px;
+}
+
+.tg-feed {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 8px 10px;
+  transition: transform .5s var(--ease);
+}
+
+.tg-msg {
+  position: relative;
+  align-self: flex-start;
+  max-width: 90%;
+  padding: 7px 10px 6px;
+  border-radius: 14px 14px 14px 4px;
+  background: var(--tg-bubble);
+}
+
+.tg-msg p + p { margin-top: 6px; }
+
+.tg-time {
+  float: right;
+  margin: 5px 0 -3px 8px;
+  color: var(--tg-muted);
+  font-size: 10.5px;
+}
+
+.tg-post {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: 94%;
+}
+
+.tg-msg--media {
+  max-width: 100%;
+  padding: 3px 3px 6px;
+}
+
+.tg-video {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 10;
+  border-radius: 11px 11px 4px 4px;
+  background:
+    radial-gradient(120% 90% at 30% 20%, rgba(255, 106, 44, .35), transparent 60%),
+    linear-gradient(160deg, #2c4743, #14231f);
+}
+
+.tg-video__tag {
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  padding: 2px 7px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, .4);
+  font-size: 10.5px;
+}
+
+.tg-play {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, .45) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 6.5v11l9-5.5z' fill='%23fff'/%3E%3C/svg%3E") center / 22px no-repeat;
+}
+
+.tg-caption { padding: 7px 7px 0; }
+
+.tg-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: 2px solid var(--tg-bg);
+  border-radius: 50%;
+  background: var(--done);
+}
+
+.tg-kb {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.6fr;
+  gap: 4px;
+}
+
+.tg-kb span {
+  display: grid;
+  place-items: center;
+  height: 32px;
+  border-radius: 10px;
+  background: var(--tg-key);
+  font-size: 12.5px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background-color .2s, transform .2s var(--ease);
+}
+
+.tg-kb .tg-kb__wide { grid-column: 1 / -1; }
+.tg-kb .is-pressed { transform: scale(.95); background: rgba(255, 255, 255, .26); }
+.tg-kb .is-done { background: rgba(47, 191, 104, .28); }
+
+.tg-compose {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 50px;
+  padding: 4px 8px 12px;
+}
+
+.tg-menu {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 30px;
+  padding: 0 11px;
+  border-radius: 15px;
+  background: var(--tg-accent);
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.tg-input {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, .08);
+  color: var(--tg-muted);
+  font-size: 12.5px;
+}
+
+.tg-mic {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .08);
+  color: var(--tg-muted);
+}
+
+/* Typing indicator: in the phone and on the page */
+.tg-typing, .typing {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.tg-typing[hidden], .typing[hidden] { display: none; }
+
+.tg-typing {
+  position: absolute;
+  left: 8px;
+  bottom: 10px;
+  padding: 11px 12px;
+  border-radius: 14px 14px 14px 4px;
+  background: var(--tg-bubble);
+}
+
+.typing {
+  align-self: flex-start;
+  padding: 15px 16px;
+  border-radius: var(--r-bubble) var(--r-bubble) var(--r-bubble) var(--r-tail);
+  background: var(--bubble);
+}
+
+.tg-typing i, .typing i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: .35;
+  animation: dot 1s ease-in-out 3;
+}
+
+.typing i { width: 7px; height: 7px; color: var(--ink-2); }
+.tg-typing i:nth-child(2), .typing i:nth-child(2) { animation-delay: .15s; }
+.tg-typing i:nth-child(3), .typing i:nth-child(3) { animation-delay: .3s; }
+
+@keyframes dot {
+  0%, 100% { opacity: .35; transform: none; }
+  40% { opacity: 1; transform: translateY(-3px); }
+}
+
+/* M1: the phone comes alive once. Without JS or with reduced motion this is the final state. */
+[data-m1] {
+  transition: opacity .35s var(--ease), transform .35s var(--ease);
+}
+
+[data-m1].is-hidden {
+  opacity: 0;
+  transform: translateY(10px) scale(.97);
+}
+
+.tg-badge.is-hidden { transform: scale(.4); }
+
+/* === M2: three layers === */
+.layers {
+  display: grid;
+  gap: 8px;
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.layer {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 12px;
+  padding: 14px 16px 16px 14px;
+  transition: box-shadow .25s, background-color .25s;
+}
+
+.layer__num {
+  grid-row: span 2;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid var(--teal);
+  border-radius: 50%;
+  color: var(--teal);
+  font-size: 15px;
+  font-weight: 800;
+  transition: background-color .25s, border-color .25s, color .25s;
+}
+
+.layer__title {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -.01em;
+  padding-top: 4px;
+}
+
+.layer__btn {
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+/* The whole bubble is clickable */
+.layer__btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.layer__btn:focus-visible { outline: none; }
+.layer:has(.layer__btn:focus-visible) { outline: 3px solid var(--teal); outline-offset: 3px; }
+
+.layer__text {
+  margin-top: 4px;
+  color: var(--ink-2);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.layer.is-active { box-shadow: 0 0 0 2px var(--teal); }
+
+.layer.is-active .layer__num {
+  border-color: var(--orange);
+  background: var(--orange);
+  color: var(--ink);
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin: 0 auto 16px;
+  max-width: 340px;
+}
+
+.tab {
+  flex: 1 1 auto;
+  min-height: 44px;
+  padding: 0 10px;
+  border: 1.5px solid var(--teal);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .6);
+  color: var(--teal);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color .2s, color .2s;
+}
+
+.tab[aria-selected="true"] { background: var(--teal); color: #fff; }
+
+/* The phone shows the chosen layer: the rest dims, the feed scrolls to it */
+.m2 .tg-part { transition: opacity .3s, box-shadow .3s; }
+.m2[data-active] .tg-part { opacity: .28; }
+
+.m2[data-active="comment"] [data-part="comment"],
+.m2[data-active="video"] [data-part="video"],
+.m2[data-active="card"] [data-part="card"] { opacity: 1; }
+
+.m2[data-active="comment"] .tg-msg[data-part="comment"],
+.m2[data-active="video"] .tg-video[data-part="video"],
+.m2[data-active="card"] .tg-caption[data-part="card"] {
+  box-shadow: 0 0 0 2px var(--orange);
+}
+
+.m2 .tg-caption { border-radius: 4px 4px 10px 10px; }
+
+/* === M3: your situation, the trainer's answer === */
+.m3 {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+/* The options look like the bot's keyboard, so they don't read as sent messages */
+.replies--m3 {
+  justify-content: flex-start;
+  gap: 6px;
+  padding: 6px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, .45);
+  box-shadow: inset 0 0 0 1px rgba(14, 77, 71, .1);
+}
+
+.replies--m3 .chip {
+  flex: 1 1 auto;
+  min-height: 44px;
+  border-color: transparent;
+  border-radius: 14px;
+  background: #fff;
+  color: var(--ink);
+  font-size: 14.5px;
+  font-weight: 500;
+  text-align: center;
+  box-shadow: 0 1px 1px rgba(14, 77, 71, .12);
+}
+
+@media (hover: hover) {
+  .replies--m3 .chip:hover { border-color: rgba(14, 77, 71, .3); }
+}
+
+.replies--m3 .chip[aria-pressed="true"] {
+  border-color: var(--teal);
+  background: #e2f0ec;
+  color: var(--teal);
+  font-weight: 600;
+}
+
+.m3__log {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.m3__reply {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 118px;
+}
+
+.m3__answer p {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.m3__all {
+  margin: 0;
+  padding: 14px 16px 14px 34px;
+  border-radius: var(--r-bubble);
+  background: var(--bubble);
+}
+
+.is-new { animation: arrive .32s var(--ease); }
+
+@keyframes arrive {
+  from { opacity: 0; transform: translateY(8px) scale(.97); }
+}
+
+.msg--out.is-new { transform-origin: 100% 100%; }
+
+/* Photo message */
+.msg--photo {
+  padding: 4px;
+  max-width: 340px;
+  border-bottom-left-radius: var(--r-tail);
+}
+
+.msg--photo img {
+  width: 100%;
+  height: auto;
+  border-radius: 18px 18px 18px 4px;
+}
+
+/* === Messages arrive as you scroll (only with JS and without reduced motion) === */
+.reveal-on [data-reveal] > * {
+  transition: opacity .34s ease, transform .34s var(--ease), box-shadow .25s;
+  transition-delay: calc(var(--i, 0) * 70ms);
+}
+
+.reveal-on [data-reveal]:not(.is-in) > * {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+[data-reveal] > :nth-child(2) { --i: 1; }
+[data-reveal] > :nth-child(3) { --i: 2; }
+[data-reveal] > :nth-child(4) { --i: 3; }
+
+/* === Final === */
+.turn--final { padding-bottom: 40px; }
+
+/* === Footer === */
+.footer {
+  padding: 24px 0 calc(110px + env(safe-area-inset-bottom));
+  color: var(--ink-2);
+  font-size: 13px;
+}
+
+.footer__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(14, 77, 71, .14);
+  padding-top: 20px;
+}
+
+.footer nav { display: flex; flex-wrap: wrap; gap: 6px 16px; }
+.footer a { color: var(--ink-2); }
+
+/* === Start bar on phones: like the button at the bottom of a new bot chat === */
+.startbar {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 30;
+  padding: 10px var(--gutter) calc(10px + env(safe-area-inset-bottom));
+  background: rgba(213, 229, 224, .9);
+  -webkit-backdrop-filter: saturate(1.3) blur(14px);
+  backdrop-filter: saturate(1.3) blur(14px);
+  border-top: 1px solid rgba(14, 77, 71, .12);
+  transform: translateY(110%);
+  transition: transform .3s var(--ease);
+}
+
+.startbar.is-visible { transform: none; }
+
+/* Toast: a service message */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(96px + env(safe-area-inset-bottom));
+  z-index: 40;
+  max-width: calc(100% - 32px);
+  padding: 9px 16px;
+  border-radius: 16px;
+  background: rgba(16, 32, 29, .9);
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+  opacity: 0;
+  transform: translate(-50%, 8px);
+  pointer-events: none;
+  transition: opacity .2s, transform .2s;
+}
+
+.toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
+
+/* === Wider screens === */
+@media (min-width: 600px) {
+  :root { --gutter: 24px; }
+  .msg { max-width: 34em; }
+  .msg--hero { max-width: 100%; }
+  .kb { max-width: 34em; }
+}
+
+@media (min-width: 900px) {
+  .startbar { display: none; }
+  .toast { bottom: 32px; }
+  .footer { padding-bottom: 32px; }
+}
+
+@media (min-width: 1024px) {
+  :root { --gutter: 40px; --header-h: 68px; }
+
+  body { font-size: 18px; }
+
+  .turn { padding: 56px 0 96px; }
+
+  .turn__grid {
+    grid-template-columns: minmax(0, 1fr) 360px;
+    grid-template-areas:
+      "thread stage"
+      "after stage"
+      "replies stage";
+    grid-template-rows: auto auto 1fr;
+    column-gap: clamp(56px, 7vw, 120px);
+    row-gap: 24px;
+    align-items: start;
+  }
+
+  .thread { grid-area: thread; }
+  .after { grid-area: after; }
+  .turn__grid > .replies { grid-area: replies; align-self: start; }
+  .stage { grid-area: stage; }
+
+  .stage--sticky {
+    position: sticky;
+    top: calc(var(--header-h) + 28px);
+  }
+
+  .turn--hero { padding-top: 40px; }
+
+  .turn--hero .turn__grid {
+    grid-template-areas:
+      "thread stage"
+      "replies stage";
+    grid-template-rows: auto 1fr;
+    min-height: calc(100vh - var(--header-h) - 120px);
+  }
+
+  .turn--hero .thread { align-self: end; }
+
+  .phone { width: 360px; }
+  .phone__screen { font-size: 13.5px; }
+
+  .brand__mark { height: 34px; font-size: 16px; }
+  .brand__name { font-size: 21px; }
+  .btn--sm { min-height: 44px; padding: 0 20px; font-size: 15px; }
+
+  .byline { font-size: 15px; }
+  .msg { padding: 14px 20px 15px; }
+  .msg--hero { padding: 22px 28px 28px; }
+  .msg--hero .display {
+    font-size: 54px;
+    font-size: clamp(40px, 9.2cqi, 54px);
+  }
+  .msg--quote { padding: 20px 26px 24px; }
+  .btn--lg { min-height: 62px; font-size: 18px; }
+  .notes { font-size: 15px; }
+
+  .tabs { display: none; }
+
+  .layers { gap: 14px; margin-top: 18px; }
+  .layer { padding: 18px 22px 20px 18px; column-gap: 16px; }
+  .layer__title { font-size: 20px; }
+  .layer__text { font-size: 16px; }
+
+  .chip { font-size: 16px; padding: 11px 18px; }
+  .replies--m3 .chip { font-size: 15.5px; }
+
+  .msg--photo { max-width: 100%; }
+  .stage--photo { padding-top: 6px; }
+
+  .m3__answer p { font-size: 20px; }
+
+  /* The conversation ends in the middle: one message, one button */
+  .turn--final .thread { max-width: 34em; margin: 0 auto; }
+}
+
+@media (min-width: 1024px) and (hover: hover) {
+  .layer:hover { background: #fbfdfc; }
+  .layer:not(.is-active):hover { box-shadow: 0 0 0 1.5px rgba(14, 77, 71, .35); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    transition-delay: 0s !important;
+  }
+}

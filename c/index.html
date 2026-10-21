@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>FT online — концепция C «Переписка»</title>
+  <meta name="description" content="Профессиональный инструмент для эффективных тренировок в зале. Бот в Telegram собирает тренировку под твой стаж, возраст, цель и травмы: видео техники и комментарий тренера к каждому упражнению. 10 дней бесплатно, без карты.">
+  <meta name="theme-color" content="#d5e5e0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geologica:wght,CRSV,SHRP@300..800,0..1,0..100&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar__row">
+    <a class="brand" href="#top" aria-label="FT online, в начало страницы">
+      <span class="brand__mark" aria-hidden="true">FT</span>
+      <span class="brand__name" aria-hidden="true">online</span>
+    </a>
+    <a class="btn btn--sm" data-cta="header" href="#">10 дней бесплатно</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- 1. First screen: the welcome message, the button attached to it, and the phone (M1) -->
+  <section class="turn turn--hero" id="hero" aria-labelledby="hero-title">
+    <div class="wrap turn__grid">
+      <div class="thread">
+        <div class="group">
+          <p class="byline"><img class="ava" src="img/sanya-avatar.webp" alt="" width="40" height="40">FT online&nbsp;— методика тренера Александра Елисеева</p>
+          <div class="msg msg--hero">
+            <h1 class="display" id="hero-title">Открыл Telegram&nbsp;— и&nbsp;знаешь, что делать в&nbsp;зале сегодня</h1>
+          </div>
+          <div class="msg msg--tail">
+            <p>Бот собирает тренировку под твой стаж, возраст, цель и&nbsp;травмы. К&nbsp;каждому упражнению&nbsp;— видео техники, подходы, отдых и&nbsp;комментарий тренера.</p>
+          </div>
+        </div>
+        <div class="kb">
+          <a class="btn btn--lg" data-cta="hero" href="#">Попробовать 10 дней бесплатно</a>
+        </div>
+        <div class="notes">
+          <p>Без карты. Откроется Telegram&nbsp;— первая тренировка через пару минут.</p>
+          <p>Потом&nbsp;— от <span class="nw" data-price="quarterPerMonth">997&nbsp;₽</span> в&nbsp;месяц. Дешевле одной тренировки с&nbsp;тренером.</p>
+        </div>
+      </div>
+
+      <div class="stage">
+        <figure class="phone m1" id="m1" aria-label="Пример тренировки в боте: комментарий тренера и карточка упражнения">
+          <div class="phone__screen">
+            <div class="tg-status" aria-hidden="true">
+              <span>12:06</span>
+              <span class="tg-status__icons">
+                <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect y="7" width="3" height="4" rx="1"/><rect x="4.5" y="5" width="3" height="6" rx="1"/><rect x="9" y="2.5" width="3" height="8.5" rx="1"/><rect x="13.5" width="3" height="11" rx="1"/></svg>
+                <svg width="24" height="12" viewBox="0 0 24 12" fill="currentColor"><rect x=".5" y=".5" width="20" height="11" rx="3.5" fill="none" stroke="currentColor" opacity=".45"/><rect x="2" y="2" width="15" height="8" rx="2"/><path d="M22 4v4c.8-.3 1.3-1.1 1.3-2S22.8 4.3 22 4Z" opacity=".45"/></svg>
+              </span>
+            </div>
+            <div class="tg-head">
+              <span class="tg-back" aria-hidden="true"><svg width="10" height="16" viewBox="0 0 10 16"><path d="M8.5 1.5 2 8l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="tg-title"><b>Fitness_trainer_online</b><span class="tg-sub" data-status>бот</span></span>
+              <span class="tg-ava" aria-hidden="true">FT</span>
+            </div>
+            <div class="tg-chat">
+              <div class="tg-feed">
+                <div class="tg-msg" data-m1="comment">
+                  <p>Сегодня работаем грудь + трицепс. Главная задача&nbsp;— техника и контроль амплитуды. Вес рабочий, без рывков.<span class="tg-time">12:06</span></p>
+                </div>
+                <div class="tg-post" data-m1="card">
+                  <div class="tg-msg tg-msg--media">
+                    <div class="tg-video" role="img" aria-label="Видео техники, плейсхолдер"><span class="tg-play"></span></div>
+                    <div class="tg-caption">
+                      <p><b>СВЕДЕНИЯ В ТРЕНАЖЁРЕ «БАБОЧКА»</b></p>
+                      <p><b>15–20 повторений × 3 подхода</b></p>
+                      <p><b>ОТДЫХ:</b> 75–90 сек.<span class="tg-time">12:06</span></p>
+                    </div>
+                    <span class="tg-badge" data-m1="badge" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M5.5 12.5 10 17l8.5-9.5" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                  </div>
+                  <div class="tg-kb">
+                    <span>👍</span><span>👎</span><span>Заменить</span>
+                    <span class="tg-kb__wide is-done" data-m1="done">Сделано ✅</span>
+                  </div>
+                </div>
+              </div>
+              <div class="tg-typing" data-m1="typing" hidden><i></i><i></i><i></i></div>
+            </div>
+            <div class="tg-compose" aria-hidden="true">
+              <span class="tg-menu"><svg width="12" height="10" viewBox="0 0 12 10"><path d="M1 1h10M1 5h10M1 9h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Меню</span>
+              <span class="tg-input">Сообщение</span>
+              <span class="tg-mic"><svg width="12" height="16" viewBox="0 0 12 16"><rect x="3" y="1" width="6" height="9" rx="3" fill="currentColor"/><path d="M1 7.5a5 5 0 0 0 10 0M6 12.5V15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+            </div>
+          </div>
+        </figure>
+      </div>
+
+      <div class="replies" role="group" aria-label="Быстрые ответы">
+        <button class="chip" type="button" data-goto="inside">Покажи упражнение</button>
+        <button class="chip" type="button" data-goto="profile" data-pick="back">А если болят колени?</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. The trainer leads you through the workout: three layers (M2) -->
+  <section class="turn turn--inside" id="inside" aria-labelledby="inside-title">
+    <div class="wrap turn__grid">
+      <div class="thread">
+        <div class="ask" data-ask hidden>
+          <div class="msg msg--out"><p></p><svg class="ticks" viewBox="0 0 17 11" width="17" height="11" aria-hidden="true"><path d="M1.2 5.6 4.6 9 11 1.6"/><path class="ticks__2" d="M7.4 7.8 8.6 9 15 1.6"/></svg></div>
+        </div>
+        <div class="group" data-reveal>
+          <div class="msg">
+            <h2 class="display display--2" id="inside-title" tabindex="-1">Тренер ведёт тебя по&nbsp;всей тренировке</h2>
+          </div>
+          <div class="msg msg--tail">
+            <p>На каждое упражнение&nbsp;— три слоя, как у&nbsp;настоящего тренера. Открыл между подходами, глянул&nbsp;— сделал.</p>
+          </div>
+        </div>
+        <ol class="layers" data-reveal>
+          <li class="msg layer is-active" data-layer="comment">
+            <span class="layer__num" aria-hidden="true">1</span>
+            <h3 class="layer__title"><button class="layer__btn" type="button" data-layer="comment" aria-pressed="true" aria-controls="m2">Комментарий тренера</button></h3>
+            <p class="layer__text">Что важно именно сейчас: где работать мощно, где подконтрольно, на&nbsp;что обратить внимание. Комментарии продолжают друг друга, поэтому к&nbsp;одному и тому же упражнению в&nbsp;разных тренировках они разные.</p>
+          </li>
+          <li class="msg layer" data-layer="video">
+            <span class="layer__num" aria-hidden="true">2</span>
+            <h3 class="layer__title"><button class="layer__btn" type="button" data-layer="video" aria-pressed="false" aria-controls="m2">Видео техники</button></h3>
+            <p class="layer__text">30–60 секунд: Александр показывает, как сесть, куда вести локти и&nbsp;как держать корпус. Без лекций.</p>
+          </li>
+          <li class="msg layer msg--tail" data-layer="card">
+            <span class="layer__num" aria-hidden="true">3</span>
+            <h3 class="layer__title"><button class="layer__btn" type="button" data-layer="card" aria-pressed="false" aria-controls="m2">Карточка упражнения</button></h3>
+            <p class="layer__text">Подходы, повторы, отдых, дыхание, фокус, техника, частые ошибки и&nbsp;совет тренера&nbsp;— на&nbsp;одном экране.</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="stage stage--sticky">
+        <div class="tabs" role="tablist" aria-label="Слой упражнения в телефоне">
+          <button class="tab" type="button" role="tab" id="tab-comment" data-layer="comment" aria-selected="true" aria-controls="m2">Комментарий</button>
+          <button class="tab" type="button" role="tab" id="tab-video" data-layer="video" aria-selected="false" aria-controls="m2" tabindex="-1">Видео</button>
+          <button class="tab" type="button" role="tab" id="tab-card" data-layer="card" aria-selected="false" aria-controls="m2" tabindex="-1">Карточка</button>
+        </div>
+        <figure class="phone m2" id="m2" role="tabpanel" aria-labelledby="tab-comment" data-active="comment">
+          <div class="phone__screen">
+            <div class="tg-status" aria-hidden="true">
+              <span>12:06</span>
+              <span class="tg-status__icons">
+                <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect y="7" width="3" height="4" rx="1"/><rect x="4.5" y="5" width="3" height="6" rx="1"/><rect x="9" y="2.5" width="3" height="8.5" rx="1"/><rect x="13.5" width="3" height="11" rx="1"/></svg>
+                <svg width="24" height="12" viewBox="0 0 24 12" fill="currentColor"><rect x=".5" y=".5" width="20" height="11" rx="3.5" fill="none" stroke="currentColor" opacity=".45"/><rect x="2" y="2" width="15" height="8" rx="2"/><path d="M22 4v4c.8-.3 1.3-1.1 1.3-2S22.8 4.3 22 4Z" opacity=".45"/></svg>
+              </span>
+            </div>
+            <div class="tg-head">
+              <span class="tg-back" aria-hidden="true"><svg width="10" height="16" viewBox="0 0 10 16"><path d="M8.5 1.5 2 8l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="tg-title"><b>Fitness_trainer_online</b><span class="tg-sub">бот</span></span>
+              <span class="tg-ava" aria-hidden="true">FT</span>
+            </div>
+            <div class="tg-chat">
+              <div class="tg-feed">
+                <div class="tg-msg tg-part" data-part="comment">
+                  <p>Сделай до упора, это твоё ключевое упражнение на грудь сегодня.<span class="tg-time">12:06</span></p>
+                </div>
+                <div class="tg-post">
+                  <div class="tg-msg tg-msg--media">
+                    <div class="tg-video tg-part" data-part="video" role="img" aria-label="Видео техники, плейсхолдер: 30–60 секунд">
+                      <span class="tg-video__tag">Видео техники</span>
+                      <span class="tg-play"></span>
+                    </div>
+                    <div class="tg-caption tg-part" data-part="card">
+                      <p><b>СВЕДЕНИЯ В ТРЕНАЖЁРЕ «БАБОЧКА»</b></p>
+                      <p><b>15–20 повторений × 3 подхода</b></p>
+                      <p><b>ОТДЫХ:</b> 75–90 сек.</p>
+                      <p><b>ДЫХАНИЕ:</b> Своди руки на выдохе, разводи на вдохе.</p>
+                      <p><b>КОНЦЕНТРАЦИЯ:</b> Грудь.</p>
+                      <p><b>ТРЕНЕР:</b> Держи грудь раскрытой и веди движение мягко, без броска назад.</p>
+                      <p><b>ТЕХНИКА:</b> Руки чуть согнуты, локти приподняты, корпус стабилен.</p>
+                      <p><b>ЧАСТЫЕ ОШИБКИ:</b> Низкие локти, рывки корпусом, неправильная высота сиденья.<span class="tg-time">12:07</span></p>
+                    </div>
+                  </div>
+                  <div class="tg-kb tg-part" data-part="card">
+                    <span>👍</span><span>👎</span><span>Заменить</span>
+                    <span class="tg-kb__wide">Сделано ✅</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tg-compose" aria-hidden="true">
+              <span class="tg-menu"><svg width="12" height="10" viewBox="0 0 12 10"><path d="M1 1h10M1 5h10M1 9h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Меню</span>
+              <span class="tg-input">Сообщение</span>
+              <span class="tg-mic"><svg width="12" height="16" viewBox="0 0 12 16"><rect x="3" y="1" width="6" height="9" rx="3" fill="currentColor"/><path d="M1 7.5a5 5 0 0 0 10 0M6 12.5V15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+            </div>
+          </div>
+        </figure>
+      </div>
+
+      <div class="after">
+        <div class="group" data-reveal>
+          <p class="byline"><img class="ava" src="img/sanya-avatar.webp" alt="" width="40" height="40" loading="lazy">Александр Елисеев</p>
+          <blockquote class="msg msg--tail msg--quote">
+            <p>«Это мой голос в&nbsp;твоём кармане»</p>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="replies" role="group" aria-label="Быстрые ответы">
+        <button class="chip" type="button" data-goto="profile" data-pick="back">А если болят колени?</button>
+        <button class="chip" type="button" data-goto="final">Как начать?</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Built around you: the trainer answers your situation (M3) -->
+  <section class="turn turn--profile" id="profile" aria-labelledby="profile-title">
+    <div class="wrap turn__grid">
+      <div class="thread">
+        <div class="group" data-reveal>
+          <div class="msg">
+            <h2 class="display display--2" id="profile-title" tabindex="-1">Тренировки под&nbsp;тебя, а&nbsp;не&nbsp;одна программа на&nbsp;всех</h2>
+          </div>
+          <div class="msg msg--tail">
+            <p>Перед стартом бот задаст несколько вопросов&nbsp;— это около 2&nbsp;минут. От ответов зависит, какие упражнения ты получишь и&nbsp;с&nbsp;какой нагрузкой.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="stage stage--sticky stage--photo" data-reveal>
+        <p class="byline"><img class="ava" src="img/sanya-avatar.webp" alt="" width="40" height="40" loading="lazy">Александр Елисеев</p>
+        <figure class="msg msg--photo">
+          <img src="img/sanya-gym.jpg" alt="Александр Елисеев в зале с гантелями" width="640" height="800" loading="lazy">
+        </figure>
+      </div>
+
+      <div class="after">
+        <div class="group" data-reveal>
+          <div class="msg msg--tail msg--voice">
+            <p>Вот как я подстраиваю тренировки:</p>
+          </div>
+        </div>
+
+        <div class="m3" id="m3">
+          <div class="replies replies--m3" role="group" aria-label="Что про тебя">
+            <button class="chip" type="button" data-key="back" aria-pressed="true" data-answer="Уберу упражнения с высокой нагрузкой на эти зоны.">Болит поясница или колени</button>
+            <button class="chip" type="button" data-key="young" aria-pressed="false" data-answer="Учту зоны роста и не дам большой нагрузки на позвоночник.">Мне меньше 18</button>
+            <button class="chip" type="button" data-key="break" aria-pressed="false" data-answer="Снижу общую нагрузку.">Давно не тренировался</button>
+            <button class="chip" type="button" data-key="first" aria-pressed="false" data-answer="Оставлю только базовые, травмобезопасные упражнения.">Первый раз в зале</button>
+            <button class="chip" type="button" data-key="stuck" aria-pressed="false" data-answer="Помогу выйти из застоя.">Застрял на одних весах</button>
+          </div>
+
+          <div class="m3__log">
+            <div class="msg msg--out m3__ask"><p class="m3__q">Болит поясница или колени</p><svg class="ticks" viewBox="0 0 17 11" width="17" height="11" aria-hidden="true"><path d="M1.2 5.6 4.6 9 11 1.6"/><path class="ticks__2" d="M7.4 7.8 8.6 9 15 1.6"/></svg></div>
+            <div class="m3__reply">
+              <p class="byline"><img class="ava" src="img/sanya-avatar.webp" alt="" width="40" height="40" loading="lazy">Александр Елисеев</p>
+              <div class="typing" hidden><i></i><i></i><i></i></div>
+              <div class="msg msg--tail msg--voice m3__answer" aria-live="polite"><p class="m3__a">Уберу упражнения с высокой нагрузкой на эти зоны.</p></div>
+            </div>
+          </div>
+
+          <noscript>
+            <ul class="m3__all">
+              <li>Болит поясница или колени&nbsp;— уберу упражнения с высокой нагрузкой на эти зоны.</li>
+              <li>Мне меньше 18&nbsp;— учту зоны роста и не дам большой нагрузки на позвоночник.</li>
+              <li>Давно не тренировался&nbsp;— снижу общую нагрузку.</li>
+              <li>Первый раз в зале&nbsp;— оставлю только базовые, травмобезопасные упражнения.</li>
+              <li>Застрял на одних весах&nbsp;— помогу выйти из застоя.</li>
+            </ul>
+          </noscript>
+        </div>
+
+        <div class="group" data-reveal>
+          <div class="msg msg--tail">
+            <p>Бот подстраивается и&nbsp;дальше: ставь лайк упражнениям, которые зашли, и&nbsp;дизлайк тем, что не&nbsp;нравятся. Тренажёр занят или его нет&nbsp;— жми «Заменить» и&nbsp;получишь равнозначное упражнение.</p>
+          </div>
+        </div>
+        <p class="service">FT online&nbsp;— тренировочный помощник, а&nbsp;не&nbsp;врач. Если болит прямо сейчас, сначала покажись специалисту.</p>
+      </div>
+
+      <div class="replies" role="group" aria-label="Быстрые ответы">
+        <button class="chip" type="button" data-goto="final">Как начать?</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Final: the conversation ends with the same button -->
+  <section class="turn turn--final" id="final" aria-labelledby="final-title">
+    <div class="wrap">
+      <div class="thread">
+        <div class="ask" data-ask hidden>
+          <div class="msg msg--out"><p></p><svg class="ticks" viewBox="0 0 17 11" width="17" height="11" aria-hidden="true"><path d="M1.2 5.6 4.6 9 11 1.6"/><path class="ticks__2" d="M7.4 7.8 8.6 9 15 1.6"/></svg></div>
+        </div>
+        <div class="group" data-reveal>
+          <div class="msg">
+            <h2 class="display display--2" id="final-title" tabindex="-1">Первая тренировка уже ждёт тебя в&nbsp;Telegram</h2>
+          </div>
+          <div class="msg msg--tail">
+            <p>Ответь на&nbsp;пару вопросов&nbsp;— и&nbsp;бот соберёт тренировку под твой уровень, цель и&nbsp;ограничения. Начни с&nbsp;10 бесплатных дней и&nbsp;почувствуй разницу между «просто сходил в&nbsp;зал» и&nbsp;тренировкой по&nbsp;системе.</p>
+          </div>
+        </div>
+        <div class="kb kb--final">
+          <a class="btn btn--lg" data-cta="final" href="#">Попробовать 10 дней бесплатно</a>
+        </div>
+        <div class="notes">
+          <p>Без карты. Первая тренировка&nbsp;— через пару минут.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__row">
+    <p>© 2026 FT online · Методика тренировок Александра Елисеева</p>
+    <nav aria-label="Ссылки в подвале">
+      <a data-cta="footer" href="#">Бот в Telegram</a>
+      <a data-contact href="#">Написать тренеру</a>
+      <a data-soon href="#">Документы</a>
+    </nav>
+  </div>
+</footer>
+
+<div class="startbar" inert>
+  <a class="btn btn--lg" data-cta="sticky" href="#">Попробовать 10 дней бесплатно</a>
+</div>
+
+<div class="toast" role="status" aria-live="polite"></div>
+
+<script src="main.js" defer></script>
+</body>
+</html>

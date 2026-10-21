@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>FT online — концепции лендинга</title>
+  <style>
+    :root { --ink: #15171a; --muted: #5d636c; --line: #e3e5e8; --bg: #f6f6f3; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; color: var(--ink); background: var(--bg); line-height: 1.5; }
+    main { max-width: 760px; margin: 0 auto; padding: 40px 16px 56px; }
+    h1 { margin: 0 0 8px; font-size: clamp(1.75rem, 6vw, 2.5rem); line-height: 1.15; letter-spacing: -0.02em; }
+    .lead { margin: 0 0 28px; color: var(--muted); }
+    ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+    a.card { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 16px; align-items: center; padding: 18px; border: 1px solid var(--line); border-radius: 16px; background: #fff; color: inherit; text-decoration: none; transition: border-color 0.15s; }
+    a.card:hover { border-color: var(--ink); }
+    a.card:focus-visible { outline: 3px solid #6f9cff; outline-offset: 3px; }
+    .letter { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 14px; font-size: 1.5rem; font-weight: 800; color: #fff; }
+    .name { margin: 0; font-size: 1.125rem; font-weight: 700; }
+    .desc { margin: 2px 0 0; color: var(--muted); font-size: 0.95rem; }
+    .note { margin: 28px 0 0; color: var(--muted); font-size: 0.875rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>FT online — четыре концепции лендинга</h1>
+    <p class="lead">Тексты во всех концепциях одинаковые — сравниваем только дизайн и механики. Лучше смотреть с телефона.</p>
+    <ul>
+      <li><a class="card" href="a/"><span class="letter" style="background:#0e1316;color:#ffb238">A</span><span><p class="name">«Зал»</p><p class="desc">Тёмная, как вечерний зал под софитами. Янтарный акцент, крупные цифры.</p></span></a></li>
+      <li><a class="card" href="b/"><span class="letter" style="background:#0b7a50">B</span><span><p class="name">«Тетрадь тренера»</p><p class="desc">Светлая, как записи тренера: пометки зелёной ручкой.</p></span></a></li>
+      <li><a class="card" href="c/"><span class="letter" style="background:#0e4d47">C</span><span><p class="name">«Переписка»</p><p class="desc">Страница ведёт себя как чат с тренером.</p></span></a></li>
+      <li><a class="card" href="d/"><span class="letter" style="background:#2f4bff">D</span><span><p class="name">«Продукт»</p><p class="desc">Светлая «продуктовая», по мотивам лидеров рынка: Fitbod, Future, Alpha Progression.</p></span></a></li>
+    </ul>
+    <p class="note">Черновики для обсуждения. Кнопки пока не ведут в бота.</p>
+  </main>
+</body>
+</html>
