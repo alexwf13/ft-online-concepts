@@ -1,6 +1,6 @@
 /* FT online — landing: prices, links into the bot, sticky CTA on phones, the trainer's pen marks
    and the mechanics: M1 "the phone comes alive", the four questions, M2 "layers",
-   M3 "situation → the trainer's answer", M4 "reps slider". */
+   M3 "situation → the trainer's answer". */
 
 /* === Settings: the only place to change prices and links === */
 const PRICING = {
@@ -16,12 +16,6 @@ const LINKS = {
 
 const NOT_READY_TEXT = "Ссылка появится перед запуском";
 const VIDEO_SOON_TEXT = "Видео появится перед запуском";
-
-const REPS_VERDICT = {
-  low: "Меньше 8 — вес тяжеловат. Бот подскажет снизить.",
-  ok: "В вилке 8–12 — вес подходит. Работай с ним.",
-  high: "Больше 12 — пора добавлять вес.",
-};
 
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -241,15 +235,15 @@ function initHeroPhone() {
 }
 
 /* === Four questions (block 2) === */
-// Each question is a link to its answer: the trainer underlines it, the page goes there,
-// and the same question is underlined next to the answer.
+// The questions are the notebook's table of contents. Each one is a link to its answer:
+// the trainer underlines it, the page goes there, and the same question is underlined next to the answer.
 function initAsks() {
   document.querySelectorAll("[data-ask]").forEach((link) => {
     const target = document.querySelector(link.getAttribute("href"));
     if (!target) return;
     link.addEventListener("click", (event) => {
       event.preventDefault();
-      link.closest(".ask").classList.add("is-asked");
+      link.classList.add("is-asked");
       drawMarks(link);
       const go = () => {
         target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
@@ -382,56 +376,6 @@ function initAdapt() {
   }));
 }
 
-/* === M4. Reps slider (block 5) === */
-function initReps() {
-  const widget = document.querySelector(".reps-widget");
-  if (!widget) return;
-  const scale = widget.querySelector(".scale");
-  const input = widget.querySelector(".scale__input");
-  const text = widget.querySelector(".verdict__text");
-  const icons = [...widget.querySelectorAll(".verdict__icon")];
-  const min = Number(input.min);
-  const max = Number(input.max);
-
-  const update = () => {
-    const value = Number(input.value);
-    const zone = value < 8 ? "low" : value > 12 ? "high" : "ok";
-    widget.style.setProperty("--i", value - min);
-    input.setAttribute("aria-valuetext", `${value} повторов`);
-    if (widget.dataset.zone === zone) return;
-    widget.dataset.zone = zone;
-    text.textContent = REPS_VERDICT[zone];
-    // the trainer redraws the mark on the margin: ✓ the weight fits, ↑ add weight, ↓ lower it
-    icons.forEach((icon) => icon.classList.toggle("is-drawn", icon.dataset.zone === zone));
-    if (!reduceMotion) {
-      text.animate([{ opacity: 0, transform: "translateY(6px)" }, { opacity: 1, transform: "none" }], { duration: 260, easing: "ease-out" });
-    }
-  };
-
-  // Taps and drags on the numbers set the value (iOS ignores taps on a range track);
-  // the range input itself keeps keyboard and screen reader support.
-  const setFromPointer = (event) => {
-    const box = scale.getBoundingClientRect();
-    const column = Math.floor(((event.clientX - box.left) / box.width) * (max - min + 1));
-    const value = Math.min(max, Math.max(min, min + column));
-    if (Number(input.value) === value) return;
-    input.value = value;
-    update();
-  };
-  scale.addEventListener("pointerdown", (event) => {
-    if (event.button !== 0) return;
-    event.preventDefault(); // keep focus on the input, so arrow keys work right after a tap
-    scale.setPointerCapture(event.pointerId);
-    setFromPointer(event);
-    input.focus({ preventScroll: true });
-  });
-  scale.addEventListener("pointermove", (event) => {
-    if (scale.hasPointerCapture(event.pointerId)) setFromPointer(event);
-  });
-  input.addEventListener("input", update);
-  update();
-}
-
 renderPrices();
 wireLinks();
 initStickyCta();
@@ -441,4 +385,3 @@ initHeroPhone();
 initAsks();
 initLayers();
 initAdapt();
-initReps();

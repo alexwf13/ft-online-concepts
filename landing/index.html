@@ -42,9 +42,6 @@
   <symbol id="pen-under-b" viewBox="0 0 120 12" preserveAspectRatio="none">
     <path d="M3 5 C 30 8, 62 4, 90 6 C 102 7, 111 6, 117 4" vector-effect="non-scaling-stroke"/>
   </symbol>
-  <symbol id="pen-brace" viewBox="0 0 300 30" preserveAspectRatio="none">
-    <path d="M4 3 C 5 12, 10 15, 30 15 L 136 15 C 144 15, 148 18, 150 27 C 152 18, 156 15, 164 15 L 270 15 C 290 15, 295 12, 296 3" vector-effect="non-scaling-stroke"/>
-  </symbol>
   <symbol id="pen-arrow" viewBox="0 0 120 60">
     <path d="M6 48 C 32 52, 70 42, 103 17"/>
     <path d="M88 13 C 94 13.5, 100 14.5, 105 15.5 C 103.5 20.5, 101.5 25.5, 99 30"/>
@@ -52,14 +49,6 @@
   <symbol id="pen-arrow-down" viewBox="0 0 40 100">
     <path d="M12 4 C 6 34, 9 64, 22 92"/>
     <path d="M10 81 C 14 85, 18 89, 22.5 93 C 24.5 87, 27 82, 30 77"/>
-  </symbol>
-  <symbol id="pen-up" viewBox="0 0 40 48">
-    <path d="M20 44 C 19 32, 20 18, 21 6"/>
-    <path d="M9 17 C 13 13, 17 9, 21 5 C 25 9, 29 13, 33 17"/>
-  </symbol>
-  <symbol id="pen-down" viewBox="0 0 40 48">
-    <path d="M20 4 C 21 16, 20 30, 19 42"/>
-    <path d="M7 31 C 11 35, 15 39, 19 43 C 23 39, 27 35, 31 31"/>
   </symbol>
 </svg>
 
@@ -127,38 +116,19 @@
     </div>
   </section>
 
-  <!-- 2. Sounds familiar? Four questions: each one leads to its answer further down -->
+  <!-- 2. Four questions as the notebook's table of contents: each one leads to its answer further down -->
   <section class="section pain" id="pain">
     <div class="wrap">
       <div class="section-head">
-        <h2>Ходишь в&nbsp;зал, стараешься&nbsp;— а&nbsp;тело почти не&nbsp;меняется?</h2>
-        <p class="lead">Скорее всего, на&nbsp;каждой тренировке в&nbsp;голове одни и&nbsp;те&nbsp;же вопросы:</p>
+        <h2>Четыре вопроса, на&nbsp;которые бот отвечает в&nbsp;каждой тренировке</h2>
       </div>
 
-      <ul class="asks">
-        <li class="ask">
-          <h3 class="ask__q"><a class="ask__link" href="#q-today" data-ask><span class="ask__text">Что делать сегодня?<svg class="pen pen--under" aria-hidden="true"><use href="#pen-under-a"/></svg></span></a></h3>
-          <p class="ask__text-more">Каждый раз что-то своё, и&nbsp;тренировки не&nbsp;складываются в&nbsp;программу.</p>
-          <svg class="ask__go" aria-hidden="true"><use href="#pen-arrow-down"/></svg>
-        </li>
-        <li class="ask">
-          <h3 class="ask__q"><a class="ask__link" href="#q-weight" data-ask><span class="ask__text">Какой вес брать?<svg class="pen pen--under" aria-hidden="true"><use href="#pen-under-b"/></svg></span></a></h3>
-          <p class="ask__text-more">Веса месяцами стоят на&nbsp;месте или растут рывками.</p>
-          <svg class="ask__go" aria-hidden="true"><use href="#pen-arrow-down"/></svg>
-        </li>
-        <li class="ask">
-          <h3 class="ask__q"><a class="ask__link" href="#q-right" data-ask><span class="ask__text">Правильно&nbsp;ли я&nbsp;делаю?<svg class="pen pen--under" aria-hidden="true"><use href="#pen-under-a"/></svg></span></a></h3>
-          <p class="ask__text-more">Со&nbsp;стороны вроде похоже, а&nbsp;куда уходит нагрузка&nbsp;— непонятно.</p>
-          <svg class="ask__go" aria-hidden="true"><use href="#pen-arrow-down"/></svg>
-        </li>
-        <li class="ask">
-          <h3 class="ask__q"><a class="ask__link" href="#q-harm" data-ask><span class="ask__text">Не&nbsp;наврежу&nbsp;ли себе?<svg class="pen pen--under" aria-hidden="true"><use href="#pen-under-b"/></svg></span></a></h3>
-          <p class="ask__text-more">После перерыва или со&nbsp;старой травмой страшно нагружаться.</p>
-          <svg class="ask__go" aria-hidden="true"><use href="#pen-arrow-down"/></svg>
-        </li>
+      <ul class="toc">
+        <li><a class="toc__link" href="#q-today" data-ask><span class="toc__q">Что делать сегодня?<svg class="pen pen--under" aria-hidden="true"><use href="#pen-under-a"/></svg></span><span class="toc__dots" aria-hidden="true"></span><span class="toc__go">ответ <span class="toc__arrow" aria-hidden="true">↓</span></span></a></li>
+        <li><a class="toc__link" href="#q-weight" data-ask><span class="toc__q">Какой вес брать?<svg class="pen pen--under" aria-hidden="true"><use href="#pen-under-b"/></svg></span><span class="toc__dots" aria-hidden="true"></span><span class="toc__go">ответ <span class="toc__arrow" aria-hidden="true">↓</span></span></a></li>
+        <li><a class="toc__link" href="#q-right" data-ask><span class="toc__q">Правильно&nbsp;ли я&nbsp;делаю?<svg class="pen pen--under" aria-hidden="true"><use href="#pen-under-a"/></svg></span><span class="toc__dots" aria-hidden="true"></span><span class="toc__go">ответ <span class="toc__arrow" aria-hidden="true">↓</span></span></a></li>
+        <li><a class="toc__link" href="#q-harm" data-ask><span class="toc__q">Не&nbsp;наврежу&nbsp;ли себе?<svg class="pen pen--under" aria-hidden="true"><use href="#pen-under-b"/></svg></span><span class="toc__dots" aria-hidden="true"></span><span class="toc__go">ответ <span class="toc__arrow" aria-hidden="true">↓</span></span></a></li>
       </ul>
-
-      <p class="bridge">Дело не&nbsp;в&nbsp;лени. Просто рядом нет тренера, который ответит. FT&nbsp;online отвечает на&nbsp;эти вопросы в&nbsp;каждой тренировке.</p>
     </div>
   </section>
 
@@ -168,7 +138,7 @@
       <div class="section-head">
         <p class="echo" id="q-right" tabindex="-1"><span class="echo__text">«Правильно&nbsp;ли я&nbsp;делаю?»<svg class="pen pen--under" aria-hidden="true"><use href="#pen-under-a"/></svg></span></p>
         <h2>Тренер ведёт тебя по&nbsp;всей тренировке</h2>
-        <p class="lead">На&nbsp;каждое упражнение&nbsp;— три слоя, как у&nbsp;настоящего тренера. Открыл между подходами, глянул&nbsp;— сделал.</p>
+        <p class="lead">К&nbsp;каждому упражнению&nbsp;— комментарий тренера, видео техники и&nbsp;карточка с&nbsp;параметрами. Открыл между подходами, глянул&nbsp;— сделал.</p>
       </div>
 
       <div class="inside__grid">
@@ -360,53 +330,30 @@
 
       <h3 class="sub-title">За&nbsp;счёт чего растёт результат</h3>
       <div class="why">
-        <article class="why__row">
-          <h4 class="why__title">Классика, доказавшая свою эффективность</h4>
-          <div class="why__body">
-            <p>Основа&nbsp;— классические стили силового тренинга старой и&nbsp;новой школы. Бот сочетает их&nbsp;в&nbsp;правильных пропорциях и&nbsp;меняет упражнения, чтобы ты&nbsp;не&nbsp;застревал на&nbsp;месте.</p>
+        <article class="why__card">
+          <div class="why__head">
+            <h4 class="why__title">Классические методики с&nbsp;самой большой доказательной базой</h4>
           </div>
+          <p>Основа&nbsp;— классические стили силового тренинга старой и&nbsp;новой школы. Бот сочетает их&nbsp;в&nbsp;правильных пропорциях и&nbsp;меняет упражнения, чтобы ты&nbsp;не&nbsp;застревал на&nbsp;месте.</p>
         </article>
-
-        <article class="why__row why__row--reps" id="reps">
+        <article class="why__card">
           <div class="why__head">
             <p class="echo" id="q-weight" tabindex="-1"><span class="echo__text">«Какой вес брать?»<svg class="pen pen--under" aria-hidden="true"><use href="#pen-under-a"/></svg></span></p>
-            <h4 class="why__title">Вес растёт по&nbsp;правилу</h4>
+            <h4 class="why__title">Прогрессия рабочих весов</h4>
           </div>
-          <div class="why__body">
-            <p>У&nbsp;каждого упражнения своя вилка повторений, например 8–12. Сделал больше 12&nbsp;чисто&nbsp;— бот подскажет добавить вес, меньше 8&nbsp;— снизить. Как подбирать рабочий вес, Александр объясняет в&nbsp;гиде по&nbsp;приложению.</p>
-
-            <div class="reps-widget" data-zone="ok" style="--i: 4">
-              <label class="reps-widget__q" for="reps-input">Сколько повторов сделал чисто?</label>
-              <div class="scale">
-                <input class="scale__input" id="reps-input" type="range" min="6" max="14" step="1" value="10" aria-valuetext="10 повторов">
-                <ol class="scale__nums" aria-hidden="true">
-                  <li>6</li><li>7</li><li class="is-in">8</li><li class="is-in">9</li><li class="is-in">10</li><li class="is-in">11</li><li class="is-in">12</li><li>13</li><li>14</li>
-                </ol>
-                <span class="scale__line" aria-hidden="true"></span>
-                <span class="scale__thumb" aria-hidden="true">
-                  <svg class="pen is-drawn scale__circle"><use href="#pen-circle"/></svg>
-                  <span class="scale__knob"></span>
-                </span>
-                <svg class="pen scale__brace" aria-hidden="true" data-draw><use href="#pen-brace"/></svg>
-                <span class="scale__range" aria-hidden="true">вилка 8–12</span>
-              </div>
-              <p class="verdict" aria-live="polite">
-                <span class="verdict__mark" aria-hidden="true">
-                  <svg class="pen verdict__icon" data-zone="ok" data-draw><use href="#pen-tick"/></svg>
-                  <svg class="pen verdict__icon" data-zone="high"><use href="#pen-up"/></svg>
-                  <svg class="pen verdict__icon" data-zone="low"><use href="#pen-down"/></svg>
-                </span>
-                <span class="verdict__text">В&nbsp;вилке 8–12&nbsp;— вес подходит. Работай с&nbsp;ним.</span>
-              </p>
-            </div>
-          </div>
+          <p>У&nbsp;каждого упражнения своя вилка повторений, например <span class="nw">8–12</span>. Сделал больше 12&nbsp;чисто&nbsp;— добавляй рабочий вес. Меньше 8&nbsp;— скинь рабочий вес. Подробнее о&nbsp;том, как определять рабочий вес и&nbsp;прогрессировать в&nbsp;нём,&nbsp;— в&nbsp;гиде по&nbsp;боту.</p>
         </article>
-
-        <article class="why__row">
-          <h4 class="why__title">Питание под цель</h4>
-          <div class="why__body">
-            <p>В&nbsp;боте есть короткий гид: как есть на&nbsp;наборе и&nbsp;на&nbsp;жиросжигании, с&nbsp;примерами меню. Без голодовок и&nbsp;ощущения, что жизнь состоит из&nbsp;курицы и&nbsp;огурцов.</p>
+        <article class="why__card">
+          <div class="why__head">
+            <h4 class="why__title">Техника</h4>
           </div>
+          <p>Короткие видео с&nbsp;объяснением и&nbsp;показом техники. В&nbsp;комментарии тренер подскажет, на&nbsp;что обратить внимание. В&nbsp;карточке упражнения&nbsp;— краткое описание техники и&nbsp;частых ошибок. Эти и&nbsp;другие инструменты помогают улучшать технику.</p>
+        </article>
+        <article class="why__card">
+          <div class="why__head">
+            <h4 class="why__title">Питание под цель</h4>
+          </div>
+          <p>В&nbsp;боте есть короткий гид: как есть на&nbsp;наборе и&nbsp;на&nbsp;жиросжигании, с&nbsp;примерами меню. Без голодовок и&nbsp;ощущения, что жизнь состоит из&nbsp;курицы и&nbsp;огурцов.</p>
         </article>
       </div>
     </div>
@@ -539,7 +486,7 @@
         <details><summary>Я&nbsp;новичок или у&nbsp;меня плохая техника&nbsp;— подойдёт?</summary><p>Да. Бот учтёт стаж и&nbsp;начнёт с&nbsp;базовых упражнений. Видео и&nbsp;комментарии тренера помогут поставить технику шаг за&nbsp;шагом.</p></details>
         <details><summary>У&nbsp;меня травма или что-то болит. Как быть?</summary><p>Отметь ограничения в&nbsp;профиле, и&nbsp;бот уберёт упражнения с&nbsp;нагрузкой на&nbsp;эти зоны. При боли, диагнозах и&nbsp;восстановлении после травмы сначала согласуй нагрузку с&nbsp;врачом.</p></details>
         <details><summary>Упражнение вызывает дискомфорт&nbsp;— что делать?</summary><p>Нажми «Заменить»: бот подберёт равнозначное упражнение под твой профиль.</p></details>
-        <details><summary>Сколько длится тренировка?</summary><p>Обычно 45–75 минут. Зависит от&nbsp;программы, темпа и&nbsp;очередей на&nbsp;тренажёры.</p></details>
+        <details><summary>Сколько длится тренировка?</summary><p>Обычно <span class="nw">45–75</span> минут. Зависит от&nbsp;программы, темпа и&nbsp;очередей на&nbsp;тренажёры.</p></details>
         <details><summary>Мне сложно держать режим.</summary><p>Начни с&nbsp;одной тренировки, потом со&nbsp;следующей. План уже готов&nbsp;— остаётся прийти и&nbsp;сделать.</p></details>
         <details><summary>Что будет после 10&nbsp;дней?</summary><p>Если захочешь продолжить, выберешь тариф прямо в&nbsp;Telegram. Карту в&nbsp;демо ты&nbsp;не&nbsp;привязывал, поэтому ничего не&nbsp;спишется само.</p></details>
         <details><summary>Как оплатить?</summary><p>Прямо в&nbsp;Telegram. Доступ откроется сразу.</p></details>
